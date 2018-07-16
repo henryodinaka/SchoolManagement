@@ -5,10 +5,9 @@
  */
 package sch.man.com.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.Entity; 
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,16 +16,14 @@ import javax.persistence.Table;
  * @author LEOGOLD
  */
 @Entity
-@Table (name= "Studentdetail")
-public class Person {
+@Table (name= "Person")
+public class Person implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private String Id;
-    
-    @Column(name = "studentID")
-    private String stundenID;
+    @Column(name = "personId")
+    private String personId;
     
     @Column(name = "First_Name")
      private String firstname;
@@ -55,17 +52,17 @@ public class Person {
     public Person() {
     }
 
-    public Person(String stundenID, String password) {
-        this.stundenID = stundenID;
+    public Person(String personId, String password) {
+        this.personId = personId;
         this.password = password;
     }
 
-    public String getStundenID() {
-        return stundenID;
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setStundenID(String stundenID) {
-        this.stundenID = stundenID;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
     public String getFirstname() {
@@ -134,7 +131,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Studentdetail{" + "stundenID=" + stundenID + ", firstname=" + firstname + ", lastname=" + lastname + ", gender=" + gender + ", dob=" + dob + ", address=" + address + ", phone=" + phone + ", email=" + email + ", password=" + password + '}';
+        return "Studentdetail{" + "personId=" + personId + ", firstname=" + firstname + ", lastname=" + lastname + ", gender=" + gender + ", dob=" + dob + ", address=" + address + ", phone=" + phone + ", email=" + email + ", password=" + password + '}';
     }
      
 

@@ -193,14 +193,14 @@ public class RegistrationForm {
         
         //Calling the Studentdetail Entity class mapped to DB and passing the values from the registrationForm bean
         //through its constructor
-        Studentdetail student = new Studentdetail(getUserID(),getFirstName(),getLastName(),getGender(),getDOB(),getAddress(),getContactNumber(),getEmailID(), getPassword());
+        Studentdetail student = new Studentdetail(userID, firstName, lastName, gender, DOB, address, DOB, emailID, password);
         
 //        student.setFirstname(getFirstName());
 //        student.setLastname(getLastName());
 //        student.setGender(getGender());
 //        student.setDob(getDOB());
 //        student.setAddress(getAddress());
-//        student.setPhone(getContactNumber());
+//        student.setPhone(getContactNumber());yy
 //        student.setEmail(getEmailID());
 //        student.setUserid(getUserID());
 //        student.setPassword(getPassword());
