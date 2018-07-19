@@ -20,38 +20,38 @@ import sch.man.com.DTO.PersonDto;
  */
 @Named(value = "bean")
 @RequestScoped
-public class Bean {
+public class PersonBean {
 
-    private String ID;
-    private String PASS;
+    private String personId;
+    private String password;
     private String firstName;
     private String lastName;
     private String gender;
-    private String dob;
+    private String dateOfBirth;
     private String address;
     private String phoneNumber;
-    private String emailID;
+    private String emailId;
     
     private RegistrationForm regForm = new RegistrationForm();
     
-    public Bean() {
+    public PersonBean() {
     }
 
-    public Bean(String ID, String PASS, String firstName, String lastName, String gender, String dob, String address, String phoneNumber, String emailID) {
-        this.ID = ID;
-        this.PASS = PASS;
+    public PersonBean(String personId, String password, String firstName, String lastName, String gender, String dateOfBirth, String address, String phoneNumber, String emailId) {
+        this.personId = personId;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
-        this.dob = dob;
+        this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.emailID = emailID;
+        this.emailId = emailId;
     }
 
    
     
-    public String action(){
+    public String retrieveAllPerson(){
         
         StringBuilder fName = new StringBuilder();
         StringBuilder lName = new StringBuilder();
@@ -62,8 +62,8 @@ public class Bean {
         StringBuilder email = new StringBuilder();
         
         PersonDto beanHelper = new PersonDto();
-        String uName = getID();
-        String pass = getPASS();
+        String uName = getPersonId();
+        String pass = getPassword();
         
         boolean validate = false;
         List<RegistrationForm> registrationForm = new ArrayList<RegistrationForm>();
@@ -99,25 +99,25 @@ public class Bean {
         setFirstName(fName.toString());
         setLastName(lName.toString());
         setGender(gen.toString());
-        setDob(dOB.toString());
+        setDateOfBirth(dOB.toString());
         setAddress(homeAddress.toString());
         setPhoneNumber(phone.toString());
-        setEmailID(email.toString());
+        setEmailId(email.toString());
     }
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
+    public String getPersonId() {
+        return personId;
     }
 
-    public String getPASS() {
-        return PASS;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
-    public void setPASS(String PASS) {
-        this.PASS = PASS;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public RegistrationForm getRegForm() {
@@ -152,12 +152,12 @@ public class Bean {
         this.gender = gender;
     }
 
-    public String getDob() {
-        return dob;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getAddress() {
@@ -176,12 +176,12 @@ public class Bean {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEmailID() {
-        return emailID;
+    public String getEmailId() {
+        return emailId;
     }
 
-    public void setEmailID(String emailID) {
-        this.emailID = emailID;
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
     
 }

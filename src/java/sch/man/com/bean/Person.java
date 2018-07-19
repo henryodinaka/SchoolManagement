@@ -34,6 +34,12 @@ public class Person {
         this.parentPhone = parentPhone;
         this.dob = dob;
     }
+    
+    public String save(){
+        
+        return "Success";
+    }
+    
 
     public String getFirstName() {
         return firstName;

@@ -5,8 +5,10 @@ package sch.man.com.DTO;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import sch.man.com.config.HibernateUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import sch.man.com.bean.Person;
 import sch.man.com.controller.RegistrationForm;
 
 /*
@@ -22,23 +24,44 @@ import sch.man.com.controller.RegistrationForm;
 
 public class PersonDto {
     
-    Session session = null;
 
+    @Autowired
+    private SessionFactory sessionFactory;
+    private Session session; 
+    private Query query;
     public PersonDto() {
-        this.session = HibernateUtil.getSessionFactory().openSession();
+        
     }
     
-    public List <RegistrationForm> getStudent(){
+    public void save(Person person){
+       session = sessionFactory.getCurrentSession();
+       session.save(person);
         
-        List <RegistrationForm> student = null;
+    }
+    public List <Person> getAllPerson(){
+        
+        List <Person> person = null;
         try{
-            Transaction transaction = session.beginTransaction();
+            session = sessionFactory.getCurrentSession();
             Query query = session.createQuery("from Person");
-            student = (List<RegistrationForm>) query.list();
+            person = (List<Person>) query.list();
         }
         catch(Exception ex){
             ex.printStackTrace();
         }
-        return student;
+        return person;
+    }
+    public List <Person> getPerson(){
+        
+        List <Person> person = null;
+        try{
+            session = sessionFactory.getCurrentSession();
+            Query query = session.createQuery("from Person");
+            person = (List<Person>) query.list();
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return person;
     }
 }
