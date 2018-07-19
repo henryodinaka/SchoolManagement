@@ -31,27 +31,27 @@ public class RegistrationForm {
     private String gender;
     private String address;
     private String contactNumber;
-    private String emailID;
-    private String userID;
+    private String emailId;
+    private String userId;
     private String password;
     private String confirmPassword;
-    private String DOB;
+    private String dateOfBirth;
     private String finalPassword;
-    private String userIDError;
+    private String userIdError;
     
     public RegistrationForm() {
     }
     
-    public RegistrationForm(String firstName, String lastName, String gender, String address, String contactNumber, String emailID, String userID, String fPassword, String dob) {
+    public RegistrationForm(String firstName, String lastName, String gender, String address, String contactNumber, String emailId, String userId, String fPassword, String dob) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.address = address;
         this.contactNumber = contactNumber;
-        this.emailID = emailID;
-        this.userID = userID;        
+        this.emailId = emailId;
+        this.userId = userId;        
         this.finalPassword = fPassword;
-        this.DOB = dob;
+        this.dateOfBirth = dob;
     }
     
     public String getFirstName() {
@@ -94,20 +94,20 @@ public class RegistrationForm {
         this.contactNumber = contactNumber;
     }
     
-    public String getEmailID() {
-        return emailID;
+    public String getEmailId() {
+        return emailId;
     }
     
-    public void setEmailID(String emailID) {
-        this.emailID = emailID;
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
     
-    public String getUserID() {
-        return userID;
+    public String getUserId() {
+        return userId;
     }
     
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
     
     public String getPassword() {
@@ -126,12 +126,12 @@ public class RegistrationForm {
         this.confirmPassword = confirmPassword;
     }
     
-    public String getDOB() {
-        return DOB;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
     
-    public void setDOB(String d) {
-        this.DOB = d;
+    public void setDateOfBirth(String d) {
+        this.dateOfBirth = d;
     }
     
     public String getFinalPassword() {
@@ -142,12 +142,12 @@ public class RegistrationForm {
         this.finalPassword = finalPassword;
     }
 
-    public String getUserIDError() {
-        return userIDError;
+    public String getUserIdError() {
+        return userIdError;
     }
     
-    public void setUserIDError(String userIDError) {
-        this.userIDError = userIDError;
+    public void setUserIdError(String userIdError) {
+        this.userIdError = userIdError;
     }
     
     public void validateEmail(FacesContext fc, UIComponent c, Object value) throws ValidatorException {
@@ -193,7 +193,7 @@ public class RegistrationForm {
         
         //Calling the Studentdetail Entity class mapped to DB and passing the values from the registrationForm bean
         //through its constructor
-        Studentdetail student = new Studentdetail(userID, firstName, lastName, gender, DOB, address, DOB, emailID, password);
+        Studentdetail student = new Studentdetail(userId, firstName, lastName, gender, dateOfBirth, address, dateOfBirth, emailId, password);
         
 //        student.setFirstname(getFirstName());
 //        student.setLastname(getLastName());
@@ -211,8 +211,8 @@ public class RegistrationForm {
         
         //This uses the retured value of register method notifies the user of the existence of the chosing detail
         if(message.equals("error")){
-            setUserIDError("User Already exist. Please select another user");
-            setUserID("");
+            setUserIdError("User Already exist. Please select another user");
+            setUserId("");
             return "Registration";
         }
         else {

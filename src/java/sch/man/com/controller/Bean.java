@@ -71,15 +71,15 @@ public class Bean {
         
         for(Iterator iterate  = registrationForm.iterator(); iterate.hasNext();){
             regForm  = (RegistrationForm)iterate.next();
-          if (regForm.getUserID().toString().equals(uName) && regForm.getPassword().toString().equals(pass)){
+          if (regForm.getUserId().toString().equals(uName) && regForm.getPassword().toString().equals(pass)){
               
               validate = true;
               fName.append(regForm.getFirstName() );
               lName.append(regForm.getLastName() );
               gen.append(regForm.getGender() );
-              dOB.append(regForm.getDOB() );
+              dOB.append(regForm.getDateOfBirth() );
               homeAddress.append(regForm.getAddress() );
-              email.append(regForm.getEmailID() );
+              email.append(regForm.getEmailId() );
               phone.append(regForm.getContactNumber() );
           }  
           

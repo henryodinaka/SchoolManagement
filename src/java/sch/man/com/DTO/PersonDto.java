@@ -33,7 +33,7 @@ public class PersonDto {
         List <RegistrationForm> student = null;
         try{
             Transaction transaction = session.beginTransaction();
-            Query query = session.createQuery("from JSFWebApp.Studentdetail");
+            Query query = session.createQuery("from Person");
             student = (List<RegistrationForm>) query.list();
         }
         catch(Exception ex){

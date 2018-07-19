@@ -25,7 +25,7 @@ public class RegistrationDto {
         Transaction transaction = session.beginTransaction();
         String userId = student.getUserid();
         System.out.println(userId);
-        Query query = session.createQuery("FROM Studentdetail");
+        Query query = session.createQuery("FROM Person");
         List <Studentdetail> studentList = query.list();
         
         for(Iterator iterate = studentList.iterator(); iterate.hasNext();){

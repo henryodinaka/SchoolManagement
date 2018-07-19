@@ -13,28 +13,28 @@ import javax.enterprise.context.Dependent;
  *
  * @author Juliet
  */
-@Named(value = "employee")
+@Named(value = "student")
 @Dependent
-public class Employee {
+public class Person {
 
+    
     private String firstName;
     private String lastName;
+    private String parentName;
+    private String parentPhone;
     private Date dob;
-    private String phone;
     
-    public Employee() {
+    public Person() {
     }
 
-    public Employee(String firstName, String lastName, Date dob, String phone) {
+    public Person(String firstName, String lastName, String parentName, String parentPhone, Date dob) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.parentName = parentName;
+        this.parentPhone = parentPhone;
         this.dob = dob;
-        this.phone = phone;
     }
 
-    public String submitEmployee(){
-        return "dashboard";
-    }
     public String getFirstName() {
         return firstName;
     }
@@ -51,6 +51,22 @@ public class Employee {
         this.lastName = lastName;
     }
 
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getParentPhone() {
+        return parentPhone;
+    }
+
+    public void setParentPhone(String parentPhone) {
+        this.parentPhone = parentPhone;
+    }
+
     public Date getDob() {
         return dob;
     }
@@ -58,15 +74,5 @@ public class Employee {
     public void setDob(Date dob) {
         this.dob = dob;
     }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    
-    
     
 }
