@@ -28,7 +28,7 @@ import org.hibernate.annotations.CreationTimestamp;
  * @author LEOGOLD
  */
 @Entity 
-@Table(name = "Subject")
+@Table(name = "subject")
 public class Subjects implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -43,20 +43,20 @@ public class Subjects implements Serializable {
     @Column (name = "duration", nullable = false)
     private String duration ;    
     
-    @OneToMany(mappedBy ="resultId",
+    @OneToMany(mappedBy ="subjectId",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             targetEntity = Result.class)
     private List<Result> resultId ;
     
-    @ManyToMany(mappedBy ="studentId",
+    @ManyToMany(mappedBy ="subjectId",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             targetEntity = Student.class)
     private List<Student> studentId ;
     
     
-    @ManyToMany(mappedBy ="teacherId",
+    @ManyToMany(mappedBy ="subjectId",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             targetEntity = Teacher.class)

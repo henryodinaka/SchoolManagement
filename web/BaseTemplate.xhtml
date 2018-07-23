@@ -17,12 +17,12 @@
         </style>
     </h:head>
     <h:body>
-        
+
         <table border="0" bgcolor="#808080" align="center" width="100%" style="position: relative; height: 100px">
             <tr>
                 <td class="td" align="center">
                     <p style="font-size: 38pt; color: #ffffff; font-family: Arial Rounded MT Bold">
-                       FOUNTAIN INT'L
+                        FOUNTAIN INT'L
                     </p>
                 </td>
                 <td class="td" align="left" >
@@ -37,25 +37,28 @@
                     <h:form>
                         <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="index"
                                        value="Home"></h:commandLink><br/><br/>
-                        
+
                         <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="AboutUs"
                                        value="About Us"></h:commandLink><br/><br/>
-                        
-                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="Registration"
+
+                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="personRegForm"
                                        value="Registration"></h:commandLink><br/><br/>
-                        
+
                         <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="Admissions"
                                        value="Admissions"></h:commandLink><br/><br/>
-                        
+
                         <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="Contacts"
                                        value="Contact Us"></h:commandLink><br/><br/>
                         <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="CourseDetails"
                                        value="Course Details"></h:commandLink><br/><br/>
-                        
+
                     </h:form>
-                    <lc:LoginControl userName="#{bean.personId}" password="#{bean.password}" submitValue="Submit" resetValue="Reset"/>
+                    <lc:LoginControl userName="#{personBean.personId}" password="#{personBean.password}" submitValue="Submit" resetValue="Reset"/>
                 </td>
                 <td width="85%" valign="top" bgcolor="white" >
+                    <p>
+                        <h:outputText style ="color: red" value="#{personBean.report}"/>
+                    </p>
                     <ui:insert name="body"/>
                 </td>
             </tr>

@@ -1,4 +1,4 @@
-package sch.man.com.controller;
+package sch.man.com.unused;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,7 +14,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException; 
-import sch.man.com.DTO.RegistrationDto;
 import sch.man.com.config.Studentdetail;
 
 /**

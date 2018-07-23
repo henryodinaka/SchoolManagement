@@ -2,6 +2,7 @@ package sch.man.com.model;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,25 +19,21 @@ import javax.persistence.Table;
  * @author LEOGOLD
  */
 @Entity
-@Table(name = "Teacher")
+@Table(name = "teacher")
 class Teacher implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "teacher_Id", nullable = false, unique = true)
-    private String teacherId;
-
-    @Column(name = "position", nullable = false)
-    private String position;
-
+    private String teacherId; 
     @Column(name = "special_function", nullable = false)
     private String specialFunction;
 
     @Column(name = "level", nullable = false)
     private String level;
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Department.class)
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Person.class)
     @JoinColumn(name = "person_Id",
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_Teacher_Person"))
@@ -46,6 +44,12 @@ class Teacher implements Serializable {
             nullable = false, 
             foreignKey = @ForeignKey(name = "FK_Teacher_Department"))
     private Department departmentId;
+    
+    @OneToOne(mappedBy ="hod",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            targetEntity = Department.class)
+    private Department position ;
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Student.class)
     @JoinColumn(name = "subject_Id", 
@@ -56,7 +60,7 @@ class Teacher implements Serializable {
     public Teacher() {
     }
 
-    public Teacher(String teacherId, String position, String specialFunction, String level, Person personId, Department departmentId, List<Subjects> subjectId) {
+    public Teacher(String teacherId, Department position, String specialFunction, String level, Person personId, Department departmentId, List<Subjects> subjectId) {
         this.teacherId = teacherId;
         this.position = position;
         this.specialFunction = specialFunction;
@@ -74,11 +78,11 @@ class Teacher implements Serializable {
         this.teacherId = teacherId;
     }
 
-    public String getPosition() {
+    public Department getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(Department position) {
         this.position = position;
     }
 

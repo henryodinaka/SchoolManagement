@@ -17,7 +17,7 @@ import javax.persistence.UniqueConstraint;
  */
 
 @Entity 
-@Table(name = "Result",uniqueConstraints ={@UniqueConstraint(columnNames ={"student_Id", "subject_Id"})})
+@Table(name = "result",uniqueConstraints ={@UniqueConstraint(columnNames ={"student_Id", "subject_Id"})})
 class Result implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -27,7 +27,10 @@ class Result implements Serializable {
     private String resultId;
     
     @Column (name = "CA", nullable = false)
-    private double CA ;
+    private double test1 ;
+    
+    @Column (name = "test2", nullable = false)
+    private double test2 ;
     
     @Column (name = "exam", nullable = false)
     private double exam ;
@@ -44,6 +47,15 @@ class Result implements Serializable {
     public Result() {
     }
 
+    public Result(String resultId, double test1, double test2, double exam, Student studentId, Subjects subjectId) {
+        this.resultId = resultId;
+        this.test1 = test1;
+        this.test2 = test2;
+        this.exam = exam;
+        this.studentId = studentId;
+        this.subjectId = subjectId;
+    }
+
     public String getResultId() {
         return resultId;
     }
@@ -52,12 +64,12 @@ class Result implements Serializable {
         this.resultId = resultId;
     }
 
-    public double getCA() {
-        return CA;
+    public double getTest1() {
+        return test1;
     }
 
-    public void setCA(double CA) {
-        this.CA = CA;
+    public void setTest1(double test1) {
+        this.test1 = test1;
     }
 
     public double getExam() {
@@ -86,8 +98,7 @@ class Result implements Serializable {
 
     @Override
     public String toString() {
-        return "Result{" + "resultId=" + resultId + ", CA=" + CA + ", exam=" + exam + ", studentId=" + studentId + ", subjectId=" + subjectId + '}';
-    }
-     
+        return "Result{" + "resultId=" + resultId + ", test1=" + test1 + ", test2=" + test2 + ", exam=" + exam + ", studentId=" + studentId + ", subjectId=" + subjectId + '}';
+    } 
     
 }

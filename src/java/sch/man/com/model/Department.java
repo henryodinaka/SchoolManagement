@@ -1,6 +1,7 @@
 package sch.man.com.model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,7 +19,7 @@ import javax.persistence.Table;
  */
 
 @Entity 
-@Table(name = "Department")
+@Table(name = "department")
 class Department implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -41,22 +43,21 @@ class Department implements Serializable {
             foreignKey = @ForeignKey(name = "FK_Department_Teacher"))
     private Teacher hod;
     
-    @OneToOne(mappedBy ="studentId",
+    @OneToMany(mappedBy ="departmentId",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             targetEntity = Student.class)
-    private Student studentId ;
+    private List<Student> studentId ;
     
-    @OneToOne(mappedBy ="teacherId",
+    @OneToMany(mappedBy ="departmentId",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             targetEntity = Teacher.class)
-    private Teacher teacherId ;
-
+    private List<Teacher> teacherId ;
     public Department() {
     }
 
-    public Department(String departmentId, String departmentName, int numOfTeacher, int numOfStudent, Teacher hod, Student studentId, Teacher teacherId) {
+    public Department(String departmentId, String departmentName, int numOfTeacher, int numOfStudent, Teacher hod, List<Student> studentId, List<Teacher> teacherId) {
         this.departmentId = departmentId;
         this.departmentName = departmentName;
         this.numOfTeacher = numOfTeacher;
@@ -65,6 +66,8 @@ class Department implements Serializable {
         this.studentId = studentId;
         this.teacherId = teacherId;
     }
+
+
 
     public String getDepartmentId() {
         return departmentId;
@@ -106,22 +109,23 @@ class Department implements Serializable {
         this.hod = hod;
     }
 
-    public Student getStudentId() {
+    public List<Student> getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Student studentId) {
+    public void setStudentId(List<Student> studentId) {
         this.studentId = studentId;
     }
 
-    public Teacher getTeacherId() {
+    public List<Teacher> getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(Teacher teacherId) {
+    public void setTeacherId(List<Teacher> teacherId) {
         this.teacherId = teacherId;
     }
 
+  
     @Override
     public String toString() {
         return "Department{" + "departmentId=" + departmentId + ", departmentName=" + departmentName + ", numOfTeacher=" + numOfTeacher + ", numOfStudent=" + numOfStudent + ", hod=" + hod + ", studentId=" + studentId + ", teacherId=" + teacherId + '}';

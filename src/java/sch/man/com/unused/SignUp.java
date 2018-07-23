@@ -1,4 +1,4 @@
-package sch.man.com.bean;
+package sch.man.com.unused;
 
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;

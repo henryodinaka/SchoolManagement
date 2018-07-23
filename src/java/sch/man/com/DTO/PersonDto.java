@@ -6,10 +6,11 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import sch.man.com.bean.Person;
-import sch.man.com.controller.RegistrationForm;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import sch.man.com.model.Person;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,22 +23,45 @@ import sch.man.com.controller.RegistrationForm;
  * @author LEOGOLD
  */
 
+@Service
+@Transactional
 public class PersonDto {
     
 
     @Autowired
     private SessionFactory sessionFactory;
-    private Session session; 
+
+    private Session session;
+    private String hql;
     private Query query;
+
     public PersonDto() {
         
     }
     
-    public void save(Person person){
+    public String save(Person person){
        session = sessionFactory.getCurrentSession();
        session.save(person);
-        
+        return "success";
     }
+    
+    public Person login(String username, String password) {
+        Person person = null;
+        try {
+            session = sessionFactory.getCurrentSession();
+
+            person = (Person) session.createQuery("FROM Person u "
+                    + "WHERE u.username = :username "
+                    + "AND u.password = :password")
+                    .setParameter("username", username)
+                    .setParameter("password", password)
+                    .uniqueResult();
+            return person;
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+    
     public List <Person> getAllPerson(){
         
         List <Person> person = null;
@@ -51,17 +75,44 @@ public class PersonDto {
         }
         return person;
     }
-    public List <Person> getPerson(){
-        
-        List <Person> person = null;
-        try{
+    
+    public Person getPerson(String username) {
+        session = sessionFactory.getCurrentSession();
+        Person person = null;
+        try {
             session = sessionFactory.getCurrentSession();
-            Query query = session.createQuery("from Person");
-            person = (List<Person>) query.list();
+
+            person = (Person) session.createQuery("FROM Person u "
+                    + "WHERE u.username = :username")
+                    .setParameter("username", username)
+                    .uniqueResult();
+            return person;
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
         }
-        catch(Exception ex){
-            ex.printStackTrace();
-        }
-        return person;
     }
+    
+    public int updatePerson(Person user, String username) {
+        hql = "UPDATE Person u SET u.firstName=:fName, u.lastName=:lName, u.phone=:phone,u.emailId=:email WHERE u.username =:uName";
+        session = sessionFactory.getCurrentSession();
+        query = session.createQuery(this.hql);
+        query.setParameter("uName", username);
+        query.setParameter("fName", user.getFirstName());
+        query.setParameter("lName", user.getLastName());
+        query.setParameter("phone", user.getPhone());
+        query.setParameter("email", user.getEmailId());
+
+        return query.executeUpdate();
+
+    }
+
+    public void deletePerson(Object username) {
+        session = sessionFactory.getCurrentSession();
+        hql = "DELETE FROM Person u WHERE u.username=:username";
+        Query query = session.createQuery(hql);
+        
+        query.setParameter("username", username);
+        query.executeUpdate();
+    }
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sch.man.com.model;
 
 import java.io.Serializable;
@@ -24,9 +19,9 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author LEOGOLD
  */
 @Entity
-@Table (name= "Person")
+@Table (name= "person")
 public class Person implements Serializable {
-
+ 
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -51,8 +46,9 @@ public class Person implements Serializable {
     @Column(name = "Gender")
      private String gender;
     
+    @Temporal(TemporalType.DATE)
     @Column(name = "Date_Of_Birth",nullable = false)
-     private Date dob;
+     private Date dateOfBirth;
     
     @Column(name = "Address",nullable = false)
      private String address; 
@@ -73,13 +69,13 @@ public class Person implements Serializable {
     @Column (name = "last_modified")
     private Date updated;  
     
-    @OneToOne(mappedBy ="studentId",
+    @OneToOne(mappedBy ="personId",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             targetEntity = Student.class)
     private Student studentId ;
     
-    @OneToOne(mappedBy ="teacherId",
+    @OneToOne(mappedBy ="personId",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             targetEntity = Teacher.class)
@@ -88,7 +84,7 @@ public class Person implements Serializable {
     public Person() {
     }
 
-    public Person(String personId, String firstName, String lastName, String emailId, String phone, String password, int role, String status, String gender, Date dob, String address) {
+    public Person(String personId, String firstName, String lastName, String emailId, String phone, String password, int role, String status, String gender, Date dateOfBirth, String address) {
         this.personId = personId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -98,7 +94,7 @@ public class Person implements Serializable {
         this.role = role;
         this.status = status;
         this.gender = gender;
-        this.dob = dob;
+        this.dateOfBirth = dateOfBirth;
         this.address = address;
     }
 
@@ -174,12 +170,12 @@ public class Person implements Serializable {
         this.gender = gender;
     }
 
-    public Date getDob() {
-        return dob;
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDob(Date dob) {
-        this.dob = dob;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getAddress() {
@@ -208,7 +204,7 @@ public class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "Person{" + "personId=" + personId + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId + ", phone=" + phone + ", password=" + password + ", role=" + role + ", status=" + status + ", gender=" + gender + ", dob=" + dob + ", address=" + address + ", created=" + created + ", updated=" + updated + '}';
+        return "Person{" + "personId=" + personId + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId + ", phone=" + phone + ", password=" + password + ", role=" + role + ", status=" + status + ", gender=" + gender + ", dob=" + dateOfBirth + ", address=" + address + ", created=" + created + ", updated=" + updated + '}';
     }
 
 }

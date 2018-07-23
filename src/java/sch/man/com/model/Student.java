@@ -15,6 +15,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -24,7 +25,7 @@ import javax.persistence.Table;
  * @author LEOGOLD
  */
 @Entity
-@Table(name = "Subject")
+@Table(name = "subject")
 class Student implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -42,42 +43,56 @@ class Student implements Serializable {
     @Column (name = "remark", nullable = false)
     private String remark;
    
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Student.class)
+   
+    @Column (name = "parent_name", nullable = false) 
+    private String parentName;
+    
+    
+    @Column (name = "parent_phone", nullable = false)
+    private String parentPhone;
+    
+    @Column (name = "parent_address", nullable = false)
+    private String parentAddress;
+    
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Subjects.class)
     @JoinColumn(name = "subject_Id", 
             nullable = false, 
             foreignKey = @ForeignKey(name = "FK_Student_Subject"))
     private List<Subjects> subjectId;
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Department.class)
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Person.class)
     @JoinColumn(name = "person_Id", 
             nullable = false, 
             foreignKey = @ForeignKey(name = "FK_Student_Person"))
     private Person personId;
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Department.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Department.class)
     @JoinColumn(name = "department_Id", 
             nullable = false, 
             foreignKey = @ForeignKey(name = "FK_Student_Department"))
     private Department departmentId;
 
-    @OneToMany(mappedBy = "resultId",
+    @OneToMany(mappedBy = "studentId",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             targetEntity = Result.class)
-    private List<Result> ResultId;
+    private List<Result> resultId;
 
     public Student() {
     }
 
-    public Student(String studentId, String currentClass, String classPosition, String remark, List<Subjects> subjectId, Person personId, Department departmentId, List<Result> ResultId) {
+    public Student(String studentId, String currentClass, String classPosition, String remark, String parentName, String parentPhone, String parentAddress, List<Subjects> subjectId, Person personId, Department departmentId, List<Result> resultId) {
         this.studentId = studentId;
         this.currentClass = currentClass;
         this.classPosition = classPosition;
         this.remark = remark;
+        this.parentName = parentName;
+        this.parentPhone = parentPhone;
+        this.parentAddress = parentAddress;
         this.subjectId = subjectId;
         this.personId = personId;
         this.departmentId = departmentId;
-        this.ResultId = ResultId;
+        this.resultId = resultId;
     }
 
     public String getStudentId() {
@@ -137,16 +152,40 @@ class Student implements Serializable {
     }
 
     public List<Result> getResultId() {
-        return ResultId;
+        return resultId;
     }
 
-    public void setResultId(List<Result> ResultId) {
-        this.ResultId = ResultId;
+    public void setResultId(List<Result> resultId) {
+        this.resultId = resultId;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getParentPhone() {
+        return parentPhone;
+    }
+
+    public void setParentPhone(String parentPhone) {
+        this.parentPhone = parentPhone;
+    }
+
+    public String getParentAddress() {
+        return parentAddress;
+    }
+
+    public void setParentAddress(String parentAddress) {
+        this.parentAddress = parentAddress;
     }
 
     @Override
     public String toString() {
-        return "Student{" + "studentId=" + studentId + ", currentClass=" + currentClass + ", classPosition=" + classPosition + ", remark=" + remark + ", subjectId=" + subjectId + ", personId=" + personId + ", departmentId=" + departmentId + ", ResultId=" + ResultId + '}';
+        return "Student{" + "studentId=" + studentId + ", currentClass=" + currentClass + ", classPosition=" + classPosition + ", remark=" + remark + ", parentName=" + parentName + ", parentPhone=" + parentPhone + ", parentAddress=" + parentAddress + ", subjectId=" + subjectId + ", personId=" + personId + ", departmentId=" + departmentId + ", resultId=" + resultId + '}';
     }
 
 }

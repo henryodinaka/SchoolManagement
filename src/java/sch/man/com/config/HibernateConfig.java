@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sch.man.com.config;
 
 import java.util.Properties;
@@ -51,7 +46,7 @@ public class HibernateConfig {
   @Bean
   public SessionFactory getSessionFactory() {
     LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(getDataSource());
-    sessionBuilder.scanPackages("movie.model");
+    sessionBuilder.scanPackages("sch.man.com.model");
 
     Properties props = new Properties();
     // Setting Hibernate properties
