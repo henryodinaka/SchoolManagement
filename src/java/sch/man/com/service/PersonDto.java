@@ -1,4 +1,4 @@
-package sch.man.com.DTO;
+package sch.man.com.service;
 //08095267180 08181326516
 
 
@@ -12,12 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sch.man.com.model.Person;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author LEOGOLD
@@ -25,9 +19,7 @@ import sch.man.com.model.Person;
 
 @Service
 @Transactional
-public class PersonDto {
-    
-
+public class PersonDto { 
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -45,15 +37,15 @@ public class PersonDto {
         return "success";
     }
     
-    public Person login(String username, String password) {
+    public Person login(String personId, String password) {
         Person person = null;
         try {
             session = sessionFactory.getCurrentSession();
 
             person = (Person) session.createQuery("FROM Person u "
-                    + "WHERE u.username = :username "
+                    + "WHERE u.personId = :person "
                     + "AND u.password = :password")
-                    .setParameter("username", username)
+                    .setParameter("person", personId)
                     .setParameter("password", password)
                     .uniqueResult();
             return person;

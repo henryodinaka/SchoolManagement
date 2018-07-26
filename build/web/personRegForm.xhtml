@@ -48,7 +48,7 @@
                                     <tr>
                                         <td>Date of Birth</td>
                                         <td>
-                                            <h:inputText  value="#{personBean.dateOfBirth}" converterMessage="Enter DOB in MM/DD/YY format" required="true" requiredMessage="You must your date of birth">
+                                            <h:inputText  id="dob" value="#{personBean.dateOfBirth}" converterMessage="Enter DOB in MM/DD/YY format" required="true" requiredMessage="You must your date of birth">
                                                 <f:convertDateTime pattern="MM/dd/yyyy" type="date"/>
                                             </h:inputText>
                                                 <h:message for="dob" style="color: red"/>

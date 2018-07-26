@@ -20,18 +20,9 @@ public class SchoolInitializer extends FacesInitializer implements WebApplicatio
         
         AnnotationConfigWebApplicationContext annotationCfg = new AnnotationConfigWebApplicationContext();
         annotationCfg.setConfigLocation("sch.man.com.config");
-        //annotationCfg.register(SchoolConfig.class,HibernateConfig.class);
+//        annotationCfg.register(SchoolConfig.class,HibernateConfig.class);
         sc.addListener(new ContextLoaderListener(annotationCfg));
         ServletRegistration.Dynamic dispatcher = sc.addServlet("mvc-servlet", new DispatcherServlet(annotationCfg));
         dispatcher.setLoadOnStartup(1);
-        
-       // dispatcher.addMapping("/");
-        dispatcher.addMapping("/admin/dashboard");
-        dispatcher.addMapping("/admin/view/users");
-        dispatcher.addMapping("/admin/adminPage");
-        dispatcher.addMapping("/admin/addmovie");
-        
-        dispatcher.addMapping("/user/view/user");
-        dispatcher.addMapping("/user/dashboard");
     }
 }

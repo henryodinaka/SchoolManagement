@@ -1,4 +1,4 @@
-package sch.man.com.config;
+package sch.man.com.unused;
 // Generated May 15, 2018 8:48:12 PM by Hibernate Tools 4.3.1
 
 

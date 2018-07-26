@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sch.man.com.controller;
 
 import java.text.ParseException;
@@ -16,7 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import movie.utility.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import sch.man.com.DTO.PersonDto;
+import sch.man.com.service.PersonDto;
 import sch.man.com.model.Person;
 
 /**
@@ -37,7 +32,7 @@ public class PersonBean {
     private int role = 3;
     private String status = "a";
     private String gender;
-    private Date dateOfBirth;
+    private Date dateOfBirth = new Date();
     private String address;
     private Date created;
     private Date updated;
@@ -74,6 +69,7 @@ public class PersonBean {
              //   Date dob = new SimpleDateFormat("MM/dd/yy").parse(dateOfBirth);
             person = new Person(personId, firstName, lastName, emailId, phone, password, role, status, gender, dateOfBirth, address);
             personDto.save(person);
+            System.out.println("sch.man.com.controller.PersonBean.save()");
             feedBack = true;
         } else {
             setReport("Complete all fields");

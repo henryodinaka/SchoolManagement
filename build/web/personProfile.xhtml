@@ -9,7 +9,7 @@
         <table border ="0" bgcolor="#808080" align="top" width="100%" style="height: 100%">
             <tr>
                 <td bgcolor="#000080" align="center">
-                    <p style="font-size: 38pt; color: #ffffff; font-family: Arial Rounded MT Bold">LEO UNIVERSITY</p>
+                    <p style="font-size: 38pt; color: #ffffff; font-family: Arial Rounded MT Bold">FOUNTAIN UNIVERSITY</p>
                 </td>
                 <td bgcolor="666699" align="left" >
                     <img alt="" src="Images/color1.png" width ="180" height="160" align="right"/>
@@ -28,83 +28,83 @@
         <table bgcolor="black" cellpadding="12px" border="1" width="60%" align="center">
             <tr>
                 <td bgcolor="white">
-        <table cellpadding="12px" bgcolor="white" border="0" align="center" style="height: 100%">
-            <tr>
-                <td>
-                    First Name
-                </td>
-                <td>:</td>
-                <td>
-                    <h:outputText value="#{bean.firstName}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Last Name
-                </td>
-                <td>:</td>
-                <td>
-                    <h:outputText value="#{bean.lastName}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Gender
-                </td>
-                <td>:</td>
-                <td>
-                    <h:outputText value="#{bean.gender}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                   Date Of Birth
-                </td>
-                <td>:</td>
-                <td>
-                    <h:outputText value="#{bean.dob}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Address
-                </td>
-                <td>:</td>
-                <td>
-                    <h:outputText value="#{bean.address}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Phone Number
-                </td>
-                <td>:</td>
-                <td>
-                    <h:outputText value="#{bean.phoneNumber}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Email Address
-                </td>
-                <td>:</td>
-                <td>
-                    <h:outputText value="#{bean.emailID}"/>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td>
-                    <h:form>
-                        <h:commandButton value="Log Out" action="index"/>
-                    </h:form>
+                    <table cellpadding="12px" bgcolor="white" border="0" align="center" style="height: 100%">
+                        <tr>
+                            <td>
+                                First Name
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.firstName}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Last Name
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.lastName}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Gender
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.gender}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Date Of Birth
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.dateOfBirth}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Address
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.address}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Phone Number
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.phone}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Email Address
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.emailId}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h:form>
+                                    <h:commandButton value="Log Out" action="index"/>
+                                </h:form>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>
-      </td>
-    </tr>
-    </table>
-   </h:body>
+    </h:body>
 </html>
 
