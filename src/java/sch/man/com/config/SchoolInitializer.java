@@ -19,8 +19,7 @@ public class SchoolInitializer extends FacesInitializer implements WebApplicatio
     public void onStartup(ServletContext sc) throws ServletException {
         
         AnnotationConfigWebApplicationContext annotationCfg = new AnnotationConfigWebApplicationContext();
-        annotationCfg.setConfigLocation("sch.man.com.config");
-//        annotationCfg.register(SchoolConfig.class,HibernateConfig.class);
+        annotationCfg.setConfigLocation("sch.man.com.config"); 
         sc.addListener(new ContextLoaderListener(annotationCfg));
         ServletRegistration.Dynamic dispatcher = sc.addServlet("mvc-servlet", new DispatcherServlet(annotationCfg));
         dispatcher.setLoadOnStartup(1);

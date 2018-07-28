@@ -9,9 +9,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import movie.utility.SessionUtils;
+import sch.man.com.utility.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import sch.man.com.service.PersonDto;
+import sch.man.com.service.PersonService;
 import sch.man.com.model.Person;
 
 /**
@@ -41,7 +41,7 @@ public class PersonBean {
     private String logName;
 
     @Autowired
-    private PersonDto personDto;
+    private PersonService personDto;
     private Person person;
 
     public PersonBean() {
