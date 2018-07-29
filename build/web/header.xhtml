@@ -5,19 +5,26 @@
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-    <h:body>  
-        <table border="0" bgcolor="#808080" align="center" width="100%" style="position: relative; height: 100px">
-            <tr>
-                <td class="td" align="center">
-                    <p style="font-size: 38pt; color: #ffffff; font-family: Arial Rounded MT Bold">
-                        FOUNTAIN INT'L
-                    </p>
-                </td>
-                <td class="td" align="left" >
-                    <img alt="" src="Images/color1.png" width ="180px" height="160px" align="right"/>
-                </td>
-            </tr>
-        </table>
+    <h:body> 
+        <h:form>
+            <table border="0" bgcolor="#808080" align="center" width="100%" style="position: relative; height: 100px">
+                <tr>
+                    <td class="td" align="center">
+                        <p style="font-size: 38pt; color: #ffffff; font-family: Arial Rounded MT Bold">
+                            FOUNTAIN INT'L
+                        </p>
+                    </td>
+                    <td class="td" align="left" >
+                        <img alt="" src="Images/color1.png" width ="180px" height="160px" align="right"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:commandLink value="#{personBean.logName}" action="#"/>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
     </h:body>
 </html>
 

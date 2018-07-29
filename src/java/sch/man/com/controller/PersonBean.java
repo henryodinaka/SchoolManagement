@@ -39,6 +39,8 @@ public class PersonBean {
 
     private String report;
     private String logName;
+    private String loginBtn;
+    private String servicereport;
 
     @Autowired
     private PersonService personService;
@@ -64,9 +66,8 @@ public class PersonBean {
     public String save() throws ParseException {
         boolean feedBack = false;
         if (!personId.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty() && !emailId.isEmpty() && !phone.isEmpty() && !password.isEmpty() && !gender.isEmpty() && !password.isEmpty()) {
-            
-            
-             //   Date dob = new SimpleDateFormat("MM/dd/yy").parse(dateOfBirth);
+
+            //   Date dob = new SimpleDateFormat("MM/dd/yy").parse(dateOfBirth);
             person = new Person(personId, firstName, lastName, emailId, phone, password, role, status, gender, dateOfBirth, address);
             personService.save(person);
             feedBack = true;
@@ -87,16 +88,16 @@ public class PersonBean {
     public String login() {//throws HandlingExeption
         if (!personId.isEmpty() || !password.isEmpty()) {
             person = personService.login(personId, password);
-
+        
             if (person != null) {
                 HttpSession session = SessionUtils.getSession();
                 session.setAttribute("personId", person.getPersonId());
                 session.setAttribute("loggedUser", person);
 
                 setLogName(person.getPersonId());
-                setPersonBean(person);
+                personService.setPersonBean(person);
                 return "personProfile?faces-redirect=true";
-            } else {
+        } else {
                 FacesContext.getCurrentInstance().addMessage(
                         null,
                         new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid login", "Please enter correct Username and Password"));
@@ -110,19 +111,9 @@ public class PersonBean {
         }
     }
 
-    public void setPersonBean(Person person) {
-        setAddress(person.getAddress());
-        setDateOfBirth(person.getDateOfBirth());
-        setEmailId(person.getEmailId());
-        setFirstName(person.getFirstName());
-        setGender(person.getGender());
-        setLastName(person.getLastName());
-        setPersonId(person.getPersonId());
-        setPhone(person.getPhone());
-        setRole(person.getRole());
-        setStatus(person.getStatus());
-        setCreated(person.getCreated());
-        setUpdated(person.getUpdated());
+    public String logout() {
+        personService.logout();
+        return "index?faces-redirect=true";
     }
 
     public String getPersonId() {
@@ -213,7 +204,6 @@ public class PersonBean {
         this.dateOfBirth = dateOfBirth;
     }
 
-
     public String getAddress() {
         return address;
     }
@@ -252,6 +242,14 @@ public class PersonBean {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public String getLoginBtn() {
+        return loginBtn;
+    }
+
+    public void setLoginBtn(String loginBtn) {
+        this.loginBtn = loginBtn;
     }
 
 }

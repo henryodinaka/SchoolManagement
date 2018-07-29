@@ -1,8 +1,9 @@
 package sch.man.com.service;
 //08095267180 08181326516
 
-
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -11,17 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sch.man.com.controller.PersonBean;
 import sch.man.com.model.Person;
+import sch.man.com.utility.SessionUtils;
 
 /**
  *
  * @author LEOGOLD
  */
-
 @Service
 @Transactional
-public class PersonService { 
-    
+public class PersonService {
+
     public static final String LOGIN_ACTIVE = "act";
     public static final String LOGIN_BLOCKED = "blk";
     public static final String LOGIN_INACTIVE = "ina";
@@ -36,19 +38,23 @@ public class PersonService {
     HttpSession httpSession;
     private String hql;
     private Query query;
+    
+    
+    Person person;
+    PersonBean personBean;
+    List<Person> personList = null;
 
     public PersonService() {
-        
+
     }
-    
-    public String save(Person person){
-       session = sessionFactory.getCurrentSession();
-       session.save(person);
+
+    public String save(Person person) {
+        session = sessionFactory.getCurrentSession();
+        session.save(person);
         return "success";
     }
-    
-    public Person login(String personId, String password) {
-        Person person = null;
+
+    public Person login(String personId, String password) { 
         try {
             session = sessionFactory.getCurrentSession();
 
@@ -60,27 +66,49 @@ public class PersonService {
                     .uniqueResult();
             return person;
         } catch (EmptyResultDataAccessException ex) {
+            ex.printStackTrace();
             return null;
         }
+        }
+
+    public String logout() {
+        httpSession = SessionUtils.getSession();
+        httpSession.invalidate();
+        personBean.setReport("Log out successful");
+        personBean.setLoginBtn(null);
+        personBean.setLogName(null);
+        return "index";
     }
-    
-    public List <Person> getAllPerson(){
-        
-        List <Person> person = null;
-        try{
+
+    public void setPersonBean(Person person) {
+        personBean.setAddress(person.getAddress());
+        personBean.setDateOfBirth(person.getDateOfBirth());
+        personBean.setEmailId(person.getEmailId());
+        personBean.setFirstName(person.getFirstName());
+        personBean.setGender(person.getGender());
+        personBean.setLastName(person.getLastName());
+        personBean.setPersonId(person.getPersonId());
+        personBean.setPhone(person.getPhone());
+        personBean.setRole(person.getRole());
+        personBean.setStatus(person.getStatus());
+        personBean.setCreated(person.getCreated());
+        personBean.setUpdated(person.getUpdated());
+    }
+
+    public List<Person> getAllPerson() {
+        try {
             session = sessionFactory.getCurrentSession();
             Query query = session.createQuery("from Person");
-            person = (List<Person>) query.list();
-        }
-        catch(Exception ex){
+            personList = (List<Person>) query.list();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return person;
+        return personList;
     }
-    
+
     public Person getPerson(String username) {
         session = sessionFactory.getCurrentSession();
-        Person person = null;
+
         try {
             session = sessionFactory.getCurrentSession();
 
@@ -93,7 +121,7 @@ public class PersonService {
             return null;
         }
     }
-    
+
     public int updatePerson(Person user, String username) {
         hql = "UPDATE Person u SET u.firstName=:fName, u.lastName=:lName, u.phone=:phone,u.emailId=:email WHERE u.username =:uName";
         session = sessionFactory.getCurrentSession();
@@ -112,7 +140,7 @@ public class PersonService {
         session = sessionFactory.getCurrentSession();
         hql = "DELETE FROM Person u WHERE u.username=:username";
         Query query = session.createQuery(hql);
-        
+
         query.setParameter("username", username);
         query.executeUpdate();
     }
