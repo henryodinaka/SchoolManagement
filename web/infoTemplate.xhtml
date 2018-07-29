@@ -69,15 +69,14 @@
                         <td>
                             <h:form>
                                 <h:commandButton value="Delete User" action="#{personBean.delete()}"/>
-                                <h:commandButton value="Block User" action="#{personBean.s()}"/>
-                                <h:commandButton value="Assign Role" action="#{personBean.setAdminRole()}"/>
+                                <h:commandButton value="Block User" action="#{personBean.blockUser()}"/>
+                                <h:commandButton value="Assign Role" action="#{personBean.assignRole()}"/>
                             </h:form>
                         </td>
                     </tr>
                 </table>
             </div>
         </div> 
-        <ui:include src="footer.xhtml"/>
     </h:body>
 </html>
 

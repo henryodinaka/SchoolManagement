@@ -1,10 +1,20 @@
 package sch.man.com.controller;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+import org.springframework.beans.factory.annotation.Autowired;
+import sch.man.com.model.Department;
+import sch.man.com.model.Subjects;
+import sch.man.com.service.SubjectService;
+
 /**
  *
  * @author LEOGOLD
  */
+@Named(value = "subjectBean")
+@RequestScoped
 public class SubjectBean {
+
     private String subjectId;
     private String subjectName;
     private String duration;
@@ -12,6 +22,11 @@ public class SubjectBean {
     private String studentId;
     private String teacherId;
     private String departmentId;
+    private String report;
+
+    @Autowired
+    SubjectService subjectService;
+    Subjects subject;
 
     public SubjectBean() {
     }
@@ -24,6 +39,15 @@ public class SubjectBean {
         this.studentId = studentId;
         this.teacherId = teacherId;
         this.departmentId = departmentId;
+    }
+
+    public String save() {
+        Department dept = new Department();
+        dept.setDepartmentId(departmentId);
+        subject = new Subjects(subjectId, subjectName, duration, dept);
+        subjectService.save(subject);
+
+        return "addSubject";
     }
 
     public String getSubjectId() {
@@ -81,5 +105,13 @@ public class SubjectBean {
     public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
     }
-    
+
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
+    }
+
 }

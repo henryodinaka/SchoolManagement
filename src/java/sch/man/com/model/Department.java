@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 @Entity 
 @Table(name = "department")
-class Department implements Serializable {
+public class Department implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
@@ -38,7 +38,7 @@ class Department implements Serializable {
     private int numOfStudent ;
     
     @OneToOne(fetch = FetchType.LAZY, targetEntity = Department.class)
-    @JoinColumn(name = "teacher_Id",
+    @JoinColumn(name = "Hod",
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_Department_Teacher"))
     private Teacher hod;
@@ -65,6 +65,14 @@ class Department implements Serializable {
         this.hod = hod;
         this.studentId = studentId;
         this.teacherId = teacherId;
+    }
+
+    public Department(String departmentId, String departmentName, int numOfTeacher, int numOfStudent, Teacher hod) {
+        this.departmentId = departmentId;
+        this.departmentName = departmentName;
+        this.numOfTeacher = numOfTeacher;
+        this.numOfStudent = numOfStudent;
+        this.hod = hod;
     }
 
 

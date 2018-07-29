@@ -37,6 +37,7 @@ public class PersonBean {
     private String logBtn;
     private String servicereport;
     private String message;
+    private String position;
 
     @Autowired
     private PersonService personService;
@@ -117,11 +118,11 @@ public class PersonBean {
 
     public String login() {//throws HandlingExeption
         if (!personId.isEmpty() || !password.isEmpty()) {
-            
+
             servicereport = personService.login(personId, password);
             switch (servicereport) {
                 case "admin":
-                System.out.println("printing from controller");
+                    System.out.println("printing from controller");
                     return "admin_dashboard?faces-redirect=true";
                 case "teacher":
                     return "teacher_dashboard?faces-redirect=true";
@@ -143,10 +144,20 @@ public class PersonBean {
     }
 
     public String loggedUser() {
-        personService.loggedUser();
-        return "personProfile?faces-redirect=true";
-    }
+        servicereport = personService.loggedUser();
+        switch (servicereport) {
+            case "admin": 
+                return "admin_dashboard?faces-redirect=true";
+            case "teacher":
+                return "teacher_dashboard?faces-redirect=true";
+            case "student":
+                return "student_dashboard?faces-redirect=true";
+            default:
+                return "personProfile?faces-redirect=true";
+        }
 
+    
+    }
     public String updateLoggedPerson() {
         personService.updateLoggedPerson();
         return "personProfile?faces-redirect=true";
@@ -350,6 +361,14 @@ public class PersonBean {
 
     public void setPersonList(List<Person> personList) {
         this.personList = personList;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
 }

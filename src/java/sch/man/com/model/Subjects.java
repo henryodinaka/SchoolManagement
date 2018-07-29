@@ -91,6 +91,14 @@ public class Subjects implements Serializable {
         this.updated = updated;
     }
 
+    public Subjects(String subjectId, String subjectName, String duration, Department departmentId) {
+        this.subjectId = subjectId;
+        this.subjectName = subjectName;
+        this.duration = duration;
+        this.departmentId = departmentId;
+    }
+    
+
     public String getSubjectId() {
         return subjectId;
     }

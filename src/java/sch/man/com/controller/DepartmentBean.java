@@ -1,28 +1,54 @@
 package sch.man.com.controller;
 
+import java.util.List;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+import org.springframework.beans.factory.annotation.Autowired;
+import sch.man.com.model.Department;
+import sch.man.com.model.Teacher;
+import sch.man.com.service.DepartmentService;
+
 /**
  *
  * @author LEOGOLD
  */
+@Named(value = "departmentBean")
+@RequestScoped
 public class DepartmentBean {
     
     private String departmentId;
     private String departmentName; 
     private String hod;
-    private String studentId;
-    private String teacherId;
+    private int numOfteacher;
+    private int numOfStudent;
 
+    @Autowired
+    private DepartmentService depService;
+    private Department department;
+    private List<Department> departmentList;
+    
+    private String report;
+    
     public DepartmentBean() {
     }
 
-    public DepartmentBean(String departmentId, String departmentName, String hod, String studentId, String teacherId) {
+    public DepartmentBean(String departmentId, String departmentName, String hod, int numOfteacher, int numOfStudent) {
         this.departmentId = departmentId;
         this.departmentName = departmentName;
         this.hod = hod;
-        this.studentId = studentId;
-        this.teacherId = teacherId;
+        this.numOfteacher = numOfteacher;
+        this.numOfStudent = numOfStudent;
     }
 
+    public String save(){
+        int numTeacher = Integer.valueOf(numOfteacher);
+        int numStudent = Integer.valueOf(numOfStudent);
+        Teacher teacherId = new Teacher();
+        teacherId.setTeacherId(hod);
+        department = new Department(departmentId, departmentName, numTeacher, numStudent, teacherId);
+        depService.save(department);
+        return "addDepartment";
+    }
 
     public String getDepartmentId() {
         return departmentId;
@@ -48,20 +74,29 @@ public class DepartmentBean {
         this.hod = hod;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public int getNumOfteacher() {
+        return numOfteacher;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setNumOfteacher(int numOfteacher) {
+        this.numOfteacher = numOfteacher;
     }
 
-    public String getTeacherId() {
-        return teacherId;
+    public int getNumOfStudent() {
+        return numOfStudent;
     }
 
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
+    public void setNumOfStudent(int numOfStudent) {
+        this.numOfStudent = numOfStudent;
     }
+
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
+    }
+
     
 }

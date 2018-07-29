@@ -24,9 +24,9 @@ import sch.man.com.utility.SessionUtils;
 @Transactional
 public class PersonService {
 
-    public static final String LOGIN_ACTIVE = "active";
-    public static final String LOGIN_BLOCKED = "blocked";
-    public static final String LOGIN_INACTIVE = "inactive";
+    public static final String LOGIN_ACTIVE = "act";
+    public static final String LOGIN_BLOCKED = "blk";
+    public static final String LOGIN_INACTIVE = "ina";
 
     public static final int ROLE_ADMIN = 1;
     public static final int ROLE_TEACHER = 2;
@@ -62,9 +62,9 @@ public class PersonService {
         try {
             session = sessionFactory.getCurrentSession();
 
-            person = (Person) session.createQuery("FROM Person u "
-                    + "WHERE u.personId = :person "
-                    + "AND u.password = :password")
+            person = (Person) session.createQuery("FROM Person p "
+                    + "WHERE p.personId = :person "
+                    + "AND p.password = :password")
                     .setParameter("person", personId)
                     .setParameter("password", password)
                     .uniqueResult();
@@ -164,7 +164,7 @@ public class PersonService {
             case ROLE_TEACHER:
                 return "teacher";
             default:
-                return "student";
+                return "person";
         }
     }
 
@@ -255,9 +255,9 @@ public class PersonService {
         try {
             session = sessionFactory.getCurrentSession();
 
-            person = (Person) session.createQuery("FROM Person u "
-                    + "WHERE u.username = :username")
-                    .setParameter("username", personId)
+            person = (Person) session.createQuery("FROM Person p "
+                    + "WHERE p.personId=:id")
+                    .setParameter("id", personId)
                     .uniqueResult();
 
         } catch (EmptyResultDataAccessException ex) {
@@ -271,26 +271,45 @@ public class PersonService {
         switch (role) {
 
             case ROLE_ADMIN:
+                personBean.setPosition("Admin");
                 return "admin";
 
             case ROLE_STUDENT:
+                personBean.setPosition("Student");
                 return "student";
             case ROLE_TEACHER:
+                personBean.setPosition("Teacher");
                 return "teacher";
             default:
                 return "student";
 
         }
     }
+    
+    public Person getPerson1(String personId){
+        session = sessionFactory.getCurrentSession();
+        try {
+            session = sessionFactory.getCurrentSession();
+
+            person = (Person) session.createQuery("FROM Person u "
+                    + "WHERE u.username = :username")
+                    .setParameter("username", personId)
+                    .uniqueResult();
+
+        } catch (EmptyResultDataAccessException ex) {
+            ex.printStackTrace();
+        }
+        return person;
+    }
 
     public int assignRole() {
         Person personView = (Person) httpSession.getAttribute("personView");
 
-        hql = "UPDATE Person u SET u.role=:role WHERE u.personId =:personId";
+        hql = "UPDATE Person p SET p.role=:role WHERE p.personId =:id";
         session = sessionFactory.getCurrentSession();
         query = session.createQuery(this.hql);
-        query.setParameter("personId", personView.getPersonId());
-        query.setParameter("role", personBean.getRole());
+        query.setParameter("id", personView.getPersonId());
+        query.setParameter("role", ROLE_TEACHER);
 
         return query.executeUpdate();
 
@@ -299,10 +318,10 @@ public class PersonService {
     public int blockUser() {
         Person personView = (Person) httpSession.getAttribute("personView");
 
-        hql = "UPDATE Person u SET u.status=:status WHERE u.personId =:personId";
+        hql = "UPDATE Person p SET p.status=:status WHERE p.personId =:id";
         session = sessionFactory.getCurrentSession();
         query = session.createQuery(this.hql);
-        query.setParameter("personId", personView.getPersonId());
+        query.setParameter("id", personView.getPersonId());
         query.setParameter("status", personBean.getStatus());
 
         return query.executeUpdate();
@@ -312,10 +331,10 @@ public class PersonService {
     public int suspendUser() {
         Person personView = (Person) httpSession.getAttribute("personView");
 
-        hql = "UPDATE Person u SET u.status=:status WHERE u.personId =:personId";
+        hql = "UPDATE Person p SET p.status=:status WHERE p.personId =:id";
         session = sessionFactory.getCurrentSession();
         query = session.createQuery(this.hql);
-        query.setParameter("personId", personView.getPersonId());
+        query.setParameter("id", personView.getPersonId());
         query.setParameter("status", personBean.getStatus());
 
         return query.executeUpdate();
@@ -332,11 +351,11 @@ public class PersonService {
                 + "p.gender=:gender,"
                 + "p.dateOfBirth=:dob,"
                 + "p.address=:address "
-                + "WHERE p.personId =:personId";
+                + "WHERE p.personId =:id";
 
         session = sessionFactory.getCurrentSession();
         query = session.createQuery(this.hql);
-        query.setParameter("personId", username);
+        query.setParameter("id", username);
         query.setParameter("fName", personBean.getFirstName());
         query.setParameter("lName", personBean.getLastName());
         query.setParameter("phone", personBean.getPhone());
@@ -361,7 +380,7 @@ public class PersonService {
         role = person.getRole();
         String personId = person.getPersonId();
 
-        hql = "DELETE FROM Person u WHERE u.personId=:id";
+        hql = "DELETE FROM Person p WHERE p.personId=:id";
         query = session.createQuery(hql);
 
         query.setParameter("id", personId);

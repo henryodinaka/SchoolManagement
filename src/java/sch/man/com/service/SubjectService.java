@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sch.man.com.service;
 
 import javax.servlet.http.HttpSession;
@@ -7,8 +12,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sch.man.com.controller.DepartmentBean;
-import sch.man.com.model.Department;
+import sch.man.com.controller.SubjectBean;
+import sch.man.com.model.Subjects;
 
 /**
  *
@@ -16,23 +21,25 @@ import sch.man.com.model.Department;
  */
 @Service
 @Transactional
-public class DepartmentService {
+public class SubjectService {
 
     @Autowired
     private SessionFactory sessionFactory;
+
     @Autowired
-    DepartmentBean departmentBean;
+    SubjectBean subjectBean;
 
     private Session session;
     HttpSession httpSession;
     private String hql;
     private Query query;
 
-    public String save(Department dep) {
+    public String save(Subjects sub) {
         session = sessionFactory.getCurrentSession();
-        session.save(dep);
-        departmentBean.setReport("New Subject added");
+        session.save(sub);
+        
+        subjectBean.setReport("New Subject added");
         return "success";
-    }
 
+    }
 }
