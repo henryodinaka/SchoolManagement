@@ -21,6 +21,14 @@ import sch.man.com.model.Person;
 @Service
 @Transactional
 public class PersonService { 
+    
+    public static final String LOGIN_ACTIVE = "act";
+    public static final String LOGIN_BLOCKED = "blk";
+    public static final String LOGIN_INACTIVE = "ina";
+
+    public static final int ROLE_ADMIN = 1;
+    public static final int ROLE_USER = 2;
+
     @Autowired
     private SessionFactory sessionFactory;
 

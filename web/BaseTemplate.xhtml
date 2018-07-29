@@ -7,50 +7,30 @@
     <h:head>
         <title>Fountain Intl</title>
         <link href="./resources/BaseTmCSS.css" rel="stylesheet" type="text/css"/>
-        <style>
-            table,tr{
-                border: 1px solid white;
-            }
-            .td{
-                background:"#40407a";
-            }
-        </style>
     </h:head>
     <h:body>
-
-        <table border="0" bgcolor="#808080" align="center" width="100%" style="position: relative; height: 100px">
-            <tr>
-                <td class="td" align="center">
-                    <p style="font-size: 38pt; color: #ffffff; font-family: Arial Rounded MT Bold">
-                        FOUNTAIN INT'L
-                    </p>
-                </td>
-                <td class="td" align="left" >
-                    <img alt="" src="Images/color1.png" width ="180px" height="160px" align="right"/>
-                </td>
-            </tr>
-        </table>
+        <ui:include src="header.xhtml"/>
         <table bgcolor ="white" border="1" align="top" width="100%" style="height: 100%">
             <tr>
                 <td bgcolor="#000080" width="20%" valign="top" align="center">
                     <br/><br/>
                     <h:form>
-                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="index"
+                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="index?faces-redirect=true"
                                        value="Home"></h:commandLink><br/><br/>
 
-                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="AboutUs"
+                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="aboutUs?faces-redirect=true"
                                        value="About Us"></h:commandLink><br/><br/>
 
-                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="personRegForm"
+                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="personRegForm?faces-redirect=true"
                                        value="Registration"></h:commandLink><br/><br/>
 
-                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="Admissions"
-                                       value="Admissions"></h:commandLink><br/><br/>
+                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="admission?faces-redirect=true"
+                                       value="Admission"></h:commandLink><br/><br/>
 
-                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="Contacts"
-                                       value="Contact Us"></h:commandLink><br/><br/>
-                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="CourseDetails"
-                                       value="Course Details"></h:commandLink><br/><br/>
+                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="contact?faces-redirect=true"
+                                       value="Reach Us"></h:commandLink><br/><br/>
+                        <h:commandLink style="font-family: Verdana,Geneva, sans-serif; text-decoration: none; color: white;" action="courseDetail?faces-redirect=true"
+                                       value="Courses"></h:commandLink><br/><br/>
 
                     </h:form>
                     <lc:LoginControl userName="#{personBean.personId}" password="#{personBean.password}" submitValue="Submit" resetValue="Reset"/>

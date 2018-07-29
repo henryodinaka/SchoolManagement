@@ -32,7 +32,7 @@ public class PersonBean {
     private int role = 3;
     private String status = "a";
     private String gender;
-    private Date dateOfBirth = new Date();
+    private Date dateOfBirth;
     private String address;
     private Date created;
     private Date updated;
@@ -41,7 +41,7 @@ public class PersonBean {
     private String logName;
 
     @Autowired
-    private PersonService personDto;
+    private PersonService personService;
     private Person person;
 
     public PersonBean() {
@@ -68,8 +68,7 @@ public class PersonBean {
             
              //   Date dob = new SimpleDateFormat("MM/dd/yy").parse(dateOfBirth);
             person = new Person(personId, firstName, lastName, emailId, phone, password, role, status, gender, dateOfBirth, address);
-            personDto.save(person);
-            System.out.println("sch.man.com.controller.PersonBean.save()");
+            personService.save(person);
             feedBack = true;
         } else {
             setReport("Complete all fields");
@@ -87,7 +86,7 @@ public class PersonBean {
 
     public String login() {//throws HandlingExeption
         if (!personId.isEmpty() || !password.isEmpty()) {
-            person = personDto.login(personId, password);
+            person = personService.login(personId, password);
 
             if (person != null) {
                 HttpSession session = SessionUtils.getSession();
