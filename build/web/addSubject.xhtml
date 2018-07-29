@@ -5,7 +5,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-         <link href="./resources/BaseTmCSS.css" rel="stylesheet" type="text/css"/>
+        <link href="./resources/BaseTmCSS.css" rel="stylesheet" type="text/css"/>
         <style>
             table,tr{
                 border: 1px solid white;
@@ -15,18 +15,18 @@
     </h:head>
     <h:body>
         <ui:composition template="BaseTemplate.xhtml">
-              <ui:define name="body">
-                  
-                    <p style="color: darkblue; font-size: 20pt" align="center">
-                        <b>Add New Subject</b>
-                    </p> 
-                    <table bgcolor="black" cellpadding="12px" border="1" width="60%" align="center" style="height: 120px">
-                        <tr>
-                            <td bgcolor="white">
+            <ui:define name="body">
+
+                <p style="color: darkblue; font-size: 20pt" align="center">
+                    <b>Add New Subject</b>
+                </p> 
+                <table bgcolor="black" cellpadding="12px" border="1" width="60%" align="center" style="height: 120px">
+                    <tr>
+                        <td bgcolor="white">
                             <table border="0" width="100%" bgcolor="white" align="center" style="height: 100px">
                                 <h:form>
                                     <tr>
-                                        
+
                                         <td>Subject Id:</td> 
                                         <td><h:inputText value="#{subjectBean.subjectId}"/>
                                         </td> 
@@ -46,8 +46,9 @@
                                         <td><h:inputText value="#{subjectBean.departmentId}"/>
                                         </td> 
                                     </tr>
+                                    <tr>
                                         <td align ="right">
-                                            <h:commandButton value="Submit" action="#{personBean.save()}"/>
+                                            <h:commandButton value="Submit" action="#{subjectBean.save()}"/>
                                         </td>
                                         <td align="left">
                                             <h:commandButton value="Reset" type="reset" immediate="true" action="personRegForm"/>
@@ -55,11 +56,11 @@
                                     </tr>
                                 </h:form>
                             </table>
-                            </td>
-                        </tr>
-                    </table>
-              </ui:define>
-          </ui:composition>
+                        </td>
+                    </tr>
+                </table>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 
