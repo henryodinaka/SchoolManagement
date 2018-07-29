@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+         <link href="./resources/BaseTmCSS.css" rel="stylesheet" type="text/css"/>
+        <style>
+            table,tr{
+                border: 1px solid white;
+            }
+        </style>
+        <title>Leo University</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="BaseTemplate.xhtml">
+              <ui:define name="body">
+                  
+                    <p style="color: darkblue; font-size: 20pt" align="center">
+                        <b>Registration Form</b>
+                    </p> 
+                    <table bgcolor="black" cellpadding="12px" border="1" width="60%" align="center" style="height: 120px">
+                        <tr>
+                            <td bgcolor="white">
+                            <table border="0" width="100%" bgcolor="white" align="center" style="height: 100px">
+                                <h:form>
+                                    <tr>
+                                        
+                                        <td>First Name:</td> 
+                                        <td><h:inputText value="#{personBean.firstName}"/>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>Last Name</td>
+                                        <td><h:inputText value="#{personBean.lastName}"/>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>Select Gender</td>
+                                        <td>
+                                            <h:selectOneRadio value="#{personBean.gender}" id="gender" required="true" requiredMessage="You Must select the gender">
+                                                <f:selectItem itemValue="M" itemLabel="Male"/>
+                                                <f:selectItem itemValue="F" itemLabel="Female"/> 
+                                            </h:selectOneRadio>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of Birth</td>
+                                        <td>
+                                            <h:inputText  id="dob" value="#{personBean.dateOfBirth}" converterMessage="Enter DOB in MM/DD/YY format" required="true" requiredMessage="You must your date of birth">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" type="date"/>
+                                            </h:inputText>
+                                                <h:message for="dob" style="color: red"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address </td>
+                                        <td><h:inputText value="#{personBean.address}"/>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>Phone Number</td>
+                                        <td><h:inputText value="#{personBean.phone}"/>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>E-mail</td>
+                                        <td><h:inputText value="#{personBean.emailId}"/>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>User Id</td>
+                                        <td><h:inputText value="#{personBean.personId}"/>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>Password</td>
+                                        <td><h:inputSecret value="#{personBean.password}"/>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>Confirm Password</td>
+                                        <td><h:inputSecret value="#{personBean.password2}"/>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td align ="right">
+                                            <h:commandButton value="Submit" action="#{personBean.updateLoggedPerson()}"/>
+                                        </td>
+                                        <td align="left">
+                                            <h:commandButton value="Reset" type="reset" immediate="true" action="personRegForm"/>
+                                        </td>
+                                    </tr>
+                                </h:form>
+                            </table>
+                            </td>
+                        </tr>
+                    </table>
+              </ui:define>
+          </ui:composition>
+    </h:body>
+</html>
+

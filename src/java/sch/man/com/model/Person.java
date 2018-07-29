@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity; 
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -27,6 +29,10 @@ public class Person implements Serializable {
     @Id
     @Column(name = "personId", nullable = false, unique = true)
     private String personId;
+    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "serialNo")
+    private int serial;
     
     @Column (name = "password",nullable = false)
     private String password;
@@ -53,7 +59,7 @@ public class Person implements Serializable {
     @Column(name = "Address",nullable = false)
      private String address; 
         
-    @Column (name = "status",nullable = false, length = 3) //this defines user's status: blk = blocked, act = active , ina = inactive
+    @Column (name = "status",nullable = false, length = 10) 
     private String status;
     
     @Column (name = "role",nullable = false) // Admin role is 1, teacher 2, student 3
@@ -202,9 +208,17 @@ public class Person implements Serializable {
         this.updated = updated;
     }
 
+    public int getSerial() {
+        return serial;
+    }
+
+    public void setSerial(int serial) {
+        this.serial = serial;
+    }
+
     @Override
     public String toString() {
-        return "Person{" + "personId=" + personId + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId + ", phone=" + phone + ", password=" + password + ", role=" + role + ", status=" + status + ", gender=" + gender + ", dob=" + dateOfBirth + ", address=" + address + ", created=" + created + ", updated=" + updated + '}';
+        return "Person{" + "personId=" + personId + ", serial=" + serial + ", password=" + password + ", emailId=" + emailId + ", firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + ", gender=" + gender + ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", status=" + status + ", role=" + role + ", created=" + created + ", updated=" + updated + ", studentId=" + studentId + ", teacherId=" + teacherId + '}';
     }
 
 }

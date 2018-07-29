@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Detail</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="resources/movieSite.css"/>
+    </h:head>
+    <h:body>
+        <div id="header">
+            <ui:include src="header.xhtml"/>
+        </div> 
+        <div id="wrapper-other"> 
+            <div id="sidebar-detail">
+
+                <h:form id="form-movie-series">
+                    <p:dataGrid var="person" value="#{personService.allPerson}" columns="1" layout="grid"
+                                rows="8" paginator="false" id="person-grid"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,16">
+
+                        <f:facet name="header">
+                            <p class="caption-index sticky"> 
+                                <h:outputText value="#{personBean.position}"/>
+                            </p>
+                        </f:facet>
+
+                        <p:panel header="#{person.personId}" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:graphicImage name="Images/img_avatar2.png"/> 
+
+                                <h:outputText value="First Name : #{person.firstName}" />
+                                <h:outputText value="Role : #{person.role}" />
+
+                                <h:commandButton value="More" action="#{personBean.moreInfo(person.personId)}" title="View Detail">
+                                </h:commandButton>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:dataGrid>
+                </h:form>
+
+            </div>
+            <div id="table" class="animate">  
+
+
+                <table border="0" width="60%" align="center">
+                    <tr>
+                        <td align="center">
+                            <p align="center">
+                                <img src="Images/img_avatar2.png" class="avatar"/>
+                            </p>
+                        </td>
+                    </tr>
+                </table><br/>
+                <table bgcolor="black" cellpadding="12px" border="1" width="60%" align="center">
+
+                    <tr>
+                        <!--insert starts here-->
+                        <ui:insert name="personContent"/>
+                        <!--insert end here-->
+                    </tr>
+                    <tr> 
+                        <td>
+                            <h:form>
+                                <h:commandButton value="Delete User" action="#{personBean.delete()}"/>
+                                <h:commandButton value="Block User" action="#{personBean.s()}"/>
+                                <h:commandButton value="Assign Role" action="#{personBean.setAdminRole()}"/>
+                            </h:form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div> 
+        <ui:include src="footer.xhtml"/>
+    </h:body>
+</html>
+

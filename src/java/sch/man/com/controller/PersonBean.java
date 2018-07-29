@@ -1,15 +1,10 @@
 package sch.man.com.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
-import sch.man.com.utility.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import sch.man.com.service.PersonService;
 import sch.man.com.model.Person;
@@ -37,7 +32,7 @@ public class PersonBean {
     private Date created;
     private Date updated;
 
-    private String report;
+    private static String report;
     private String logName;
     private String logBtn;
     private String servicereport;
@@ -46,6 +41,7 @@ public class PersonBean {
     @Autowired
     private PersonService personService;
     private Person person;
+    private List<Person> personList;
 
     public PersonBean() {
     }
@@ -86,11 +82,54 @@ public class PersonBean {
         }
     }
 
+    public String allPerson() {
+        personList = personService.getAllPerson();
+        return "personList?faces-redirect=true";
+    }
+
+    public String allStudent() {
+        personList = personService.getAllStudent();
+        return "studentList?faces-redirect=true";
+
+    }
+
+    public String allTeacher() {
+        personList = personService.getAllTeacher();
+        return "teacherList?faces-redirect=true";
+    }
+
+    public String moreInfo(String personId) {
+        servicereport = personService.getPerson(personId);
+        switch (servicereport) {
+
+            case "admin":
+                return "adminInfo?faces-redirect=true";
+
+            case "student":
+                return "studentInfo?faces-redirect=true";
+            case "teacher":
+                return "teacherInfo?faces-redirect=true";
+            default:
+                return "student";
+
+        }
+    }
+
     public String login() {//throws HandlingExeption
         if (!personId.isEmpty() || !password.isEmpty()) {
+            
             servicereport = personService.login(personId, password);
-
-            return "index?faces-redirectq";
+            switch (servicereport) {
+                case "admin":
+                System.out.println("printing from controller");
+                    return "admin_dashboard?faces-redirect=true";
+                case "teacher":
+                    return "teacher_dashboard?faces-redirect=true";
+                case "student":
+                    return "student_dashboard?faces-redirect=true";
+                default:
+                    return "index";
+            }
 
         } else {
             setReport("Please enter valid username and password");
@@ -113,6 +152,25 @@ public class PersonBean {
         return "personProfile?faces-redirect=true";
     }
 
+    public String assignRole() {
+        personService.assignRole();
+        return "personProfileAdmin?faces-redirect=true";
+    }
+
+    public String suspendUser() {
+        personService.suspendUser();
+        return "personProfileAdmin?faces-redirect=true";
+    }
+
+    public String blockUser() {
+        personService.blockUser();
+        return "personProfileAdmin?faces-redirect=true";
+    }
+
+    public String delete() {
+        return "";
+    }
+
     public void reset() {
         setAddress(null);
         setDateOfBirth(null);
@@ -123,7 +181,7 @@ public class PersonBean {
         setPersonId(null);
         setPhone(null);
         setRole(0);
-        setStatus(null); 
+        setStatus(null);
     }
 
     public String getPersonId() {
@@ -268,6 +326,30 @@ public class PersonBean {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getServicereport() {
+        return servicereport;
+    }
+
+    public void setServiceReport(String servicereport) {
+        this.servicereport = servicereport;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
     }
 
 }

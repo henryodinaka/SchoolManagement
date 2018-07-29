@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Teacher</title>
+        <link rel="stylesheet" href="resources/movieSite.css"/>
+    </h:head>
+    <h:body>
+        <table>
+            <tr>
+                <ui:composition template="infoTemplate.xhtml">
+                    <ui:define name="personContent">
+                                                <td bgcolor="white">
+                            <table cellpadding="12px" bgcolor="white" border="0" align="center" style="height: 100%">
+                                <tr>
+                                    <p>
+                                        <h:outputText value="#{personBean.message}"/>
+                                    </p>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Username:
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{personBean.personId}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        First Name
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{personBean.firstName}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Last Name
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{personBean.lastName}"/>
+                                    </td>
+                                </tr>  
+                                <tr>
+                                    <td>
+                                        Phone Number
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{personBean.phone}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Email Address
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{personBean.emailId}"/>
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td>
+                                        Role
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{personBean.role}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Reg Date
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{personBean.created}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Last Modified
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{personBean.updated}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </ui:define>
+                </ui:composition>
+            </tr>
+        </table>
+    </h:body>
+</html>
+

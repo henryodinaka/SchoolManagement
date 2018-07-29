@@ -24,12 +24,13 @@ import sch.man.com.utility.SessionUtils;
 @Transactional
 public class PersonService {
 
-    public static final String LOGIN_ACTIVE = "act";
-    public static final String LOGIN_BLOCKED = "blk";
-    public static final String LOGIN_INACTIVE = "ina";
+    public static final String LOGIN_ACTIVE = "active";
+    public static final String LOGIN_BLOCKED = "blocked";
+    public static final String LOGIN_INACTIVE = "inactive";
 
     public static final int ROLE_ADMIN = 1;
-    public static final int ROLE_USER = 2;
+    public static final int ROLE_TEACHER = 2;
+    public static final int ROLE_STUDENT = 3;
     int role;
 
     @Autowired
@@ -73,14 +74,65 @@ public class PersonService {
         }
 
         if (person != null) {
-            HttpSession session = SessionUtils.getSession();
-            session.setAttribute("personId", person.getPersonId());
-            session.setAttribute("loggedUser", person);
 
-            personBean.setLogName(person.getPersonId());
-            personBean.setLogBtn("Log Out");
-            setPersonBean(person);
-            return "success";
+            role = person.getRole();
+            int serial = person.getSerial();
+            if (serial == 1) {
+                httpSession = SessionUtils.getSession();
+                httpSession.setAttribute("adminRole", role);
+                httpSession.setAttribute("personId", person.getPersonId());
+                httpSession.setAttribute("loggedUser", person);
+
+                personBean.setLogName(person.getPersonId());
+                personBean.setLogBtn("Log Out");
+                personBean.setReport(null);
+                setPersonBean(person);
+                return "admin";
+            } else {
+                String status = person.getStatus();
+                switch (status) {
+                    case LOGIN_ACTIVE:
+
+                        httpSession = SessionUtils.getSession();
+                        httpSession.setAttribute("personId", person.getPersonId());
+                        httpSession.setAttribute("loggedUser", person);
+
+                        personBean.setLogName(person.getPersonId());
+                        personBean.setLogBtn("Log Out");
+                        personBean.setReport(null);
+                        setPersonBean(person);
+
+                        switch (role) {
+
+                            case ROLE_ADMIN:
+                                httpSession.setAttribute("adminRole", role);
+                                return "admin";
+
+                            case ROLE_TEACHER:
+                                return "teacher";
+
+                            case ROLE_STUDENT:
+                                return "student";
+
+                            default:
+                                return "student";
+                        }
+                    case LOGIN_BLOCKED:
+                        personBean.setReport("Sorry  " + person.getFirstName() + "! your Account is Currently blocked, please contact admin for further clearifications");
+                        personBean.setPersonId(person.getPersonId());
+                        return "blocked";
+
+                    case LOGIN_INACTIVE:
+                        personBean.setReport("Sorry  " + person.getFirstName() + "! We noticed that your Account is Currently inactive, this may be due to an unresovled issues,  please contact admin for further clearifications");
+                        personBean.setPersonId(person.getPersonId());
+                        return "inactive";
+
+                    default:
+                        personBean.setReport("Sorry  " + person.getFirstName() + "! you can't currently access your account now , please try again later or contact admin for further clearifications");
+                        personBean.setPersonId(person.getPersonId());
+                        return "issue";
+                }
+            }
         } else {
             FacesContext.getCurrentInstance().addMessage(
                     null,
@@ -107,10 +159,12 @@ public class PersonService {
         switch (role) {
             case ROLE_ADMIN:
                 return "admin";
-            case ROLE_USER:
-                return "user";
+            case ROLE_STUDENT:
+                return "student";
+            case ROLE_TEACHER:
+                return "teacher";
             default:
-                return "user";
+                return "student";
         }
     }
 
@@ -130,17 +184,72 @@ public class PersonService {
     }
 
     public List<Person> getAllPerson() {
+        httpSession.removeAttribute("currentList");
         try {
             session = sessionFactory.getCurrentSession();
-            Query query = session.createQuery("from Person");
-            personList = (List<Person>) query.list();
+            query = session.createQuery("from Person");
+            personList = query.list();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return personList;
+
+        if (personList != null) {
+            personBean.setServiceReport("success");
+
+            return personList;
+        } else {
+            personBean.setServiceReport("failed");
+            return null;
+        }
     }
 
-    public Person getPerson(String username) {
+    public List<Person> getAllTeacher() {
+        httpSession.removeAttribute("currentList");
+        try {
+            session = sessionFactory.getCurrentSession();
+            hql = "FROM Person p WHERE p.role=:role";
+            query = session.createQuery(hql);
+            query.setParameter("role", ROLE_TEACHER);
+            personList = query.list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        if (personList != null) {
+            httpSession.setAttribute("currentList", personList);
+            personBean.setServiceReport("success");
+
+            return personList;
+        } else {
+            personBean.setServiceReport("failed");
+            return null;
+        }
+    }
+
+    public List<Person> getAllStudent() {
+        httpSession.removeAttribute("currentList");
+        try {
+            session = sessionFactory.getCurrentSession();
+            hql = "FROM Person p WHERE p.role=:role";
+            query = session.createQuery(hql);
+            query.setParameter("role", ROLE_STUDENT);
+            personList = query.list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        if (personList != null) {
+            httpSession.setAttribute("currentList", personList);
+            personBean.setServiceReport("success");
+
+            return personList;
+        } else {
+            personBean.setServiceReport("failed");
+            return null;
+        }
+    }
+
+    public String getPerson(String personId) {
         session = sessionFactory.getCurrentSession();
 
         try {
@@ -148,24 +257,66 @@ public class PersonService {
 
             person = (Person) session.createQuery("FROM Person u "
                     + "WHERE u.username = :username")
-                    .setParameter("username", username)
+                    .setParameter("username", personId)
                     .uniqueResult();
-            return person;
+
         } catch (EmptyResultDataAccessException ex) {
-            return null;
+            ex.printStackTrace();
+        }
+        httpSession = SessionUtils.getSession();
+        httpSession.setAttribute("personView", person);
+        personBean.setPerson(person);
+
+        role = person.getRole();
+        switch (role) {
+
+            case ROLE_ADMIN:
+                return "admin";
+
+            case ROLE_STUDENT:
+                return "student";
+            case ROLE_TEACHER:
+                return "teacher";
+            default:
+                return "student";
+
         }
     }
 
-    public int updatePerson() {
-        username = SessionUtils.getPersonId();
-        hql = "UPDATE Person u SET u.firstName=:fName, u.lastName=:lName, u.phone=:phone,u.emailId=:email WHERE u.username =:uName";
+    public int assignRole() {
+        Person personView = (Person) httpSession.getAttribute("personView");
+
+        hql = "UPDATE Person u SET u.role=:role WHERE u.personId =:personId";
         session = sessionFactory.getCurrentSession();
         query = session.createQuery(this.hql);
-        query.setParameter("uName", username);
-        query.setParameter("fName", personBean.getFirstName());
-        query.setParameter("lName", personBean.getLastName());
-        query.setParameter("phone", personBean.getPhone());
-        query.setParameter("email", personBean.getEmailId());
+        query.setParameter("personId", personView.getPersonId());
+        query.setParameter("role", personBean.getRole());
+
+        return query.executeUpdate();
+
+    }
+
+    public int blockUser() {
+        Person personView = (Person) httpSession.getAttribute("personView");
+
+        hql = "UPDATE Person u SET u.status=:status WHERE u.personId =:personId";
+        session = sessionFactory.getCurrentSession();
+        query = session.createQuery(this.hql);
+        query.setParameter("personId", personView.getPersonId());
+        query.setParameter("status", personBean.getStatus());
+
+        return query.executeUpdate();
+
+    }
+
+    public int suspendUser() {
+        Person personView = (Person) httpSession.getAttribute("personView");
+
+        hql = "UPDATE Person u SET u.status=:status WHERE u.personId =:personId";
+        session = sessionFactory.getCurrentSession();
+        query = session.createQuery(this.hql);
+        query.setParameter("personId", personView.getPersonId());
+        query.setParameter("status", personBean.getStatus());
 
         return query.executeUpdate();
 
@@ -173,9 +324,16 @@ public class PersonService {
 
     public String updateLoggedPerson() {
         username = SessionUtils.getPersonId();
-//        person = new Person(personBean.getFirstName(), personBean.getLastName(), personBean.getEmailId(), personBean.getPhone());
-        hql = "UPDATE Person p SET p.firstName=:fName,p.lastName=:lName, p.phone=:phone,p.emailId=:email,p.gender=:gender,p.dateOfBirth=:dob,p.address=:address WHERE p.personId =:personId";
-         
+        hql = "UPDATE Person p SET "
+                + "p.firstName=:fName,"
+                + "p.lastName=:lName, "
+                + "p.phone=:phone,"
+                + "p.emailId=:email,"
+                + "p.gender=:gender,"
+                + "p.dateOfBirth=:dob,"
+                + "p.address=:address "
+                + "WHERE p.personId =:personId";
+
         session = sessionFactory.getCurrentSession();
         query = session.createQuery(this.hql);
         query.setParameter("personId", username);
@@ -183,7 +341,7 @@ public class PersonService {
         query.setParameter("lName", personBean.getLastName());
         query.setParameter("phone", personBean.getPhone());
         query.setParameter("email", personBean.getEmailId());
-        query.setParameter("gender", personBean.getGender()); 
+        query.setParameter("gender", personBean.getGender());
         query.setParameter("dob", personBean.getDateOfBirth());
         query.setParameter("address", personBean.getAddress());
         int quryResult = query.executeUpdate();
@@ -197,13 +355,27 @@ public class PersonService {
         }
     }
 
-    public void deletePerson(Object username) {
+    public String deletePerson() {
         session = sessionFactory.getCurrentSession();
-        hql = "DELETE FROM Person u WHERE u.username=:username";
-        Query query = session.createQuery(hql);
+        person = (Person) httpSession.getAttribute("personView");
+        role = person.getRole();
+        String personId = person.getPersonId();
 
-        query.setParameter("username", username);
+        hql = "DELETE FROM Person u WHERE u.personId=:id";
+        query = session.createQuery(hql);
+
+        query.setParameter("id", personId);
         query.executeUpdate();
-    }
 
+        switch (role) {
+            case ROLE_STUDENT:
+                return "student";
+            case ROLE_TEACHER:
+                return "teacher";
+            default:
+                return "allList";
+
+        }
+
+    }
 }

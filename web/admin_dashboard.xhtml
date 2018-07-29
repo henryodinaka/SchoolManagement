@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Admin Dashboard</title>
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml"/>
+        <table border="0" width="60%" align="center">
+            <tr>
+                <td align="center">
+                    <p align="center" style="color: darkblue; font-size: 20pt">
+                        Admin Dashboard
+                    </p>
+                </td>
+            </tr>
+        </table><br/>
+        <table bgcolor="black" cellpadding="12px" border="1" width="60%" align="center">
+            <tr>
+                <td bgcolor="white">
+                    <table cellpadding="12px" bgcolor="white" border="0" align="center" style="height: 100%">
+                        <tr>
+                            <td>
+                                First Name
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.firstName}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Last Name
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.lastName}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Gender
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.gender}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Date Of Birth
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.dateOfBirth}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Address
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.address}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Phone Number
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.phone}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Email Address
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <h:outputText value="#{personBean.emailId}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h:form>
+<!--                                    <h:commandButton value="Department" action="{departmentBean.allDepartment()}"/>
+                                    <h:commandButton value="Subject" action="{subjectBean.addSubject()}"/>-->
+                                    <h:commandButton value="Person" action="#{personBean.allPerson()}"/>
+                                    <h:commandButton value="Student" action="#{personBean.allStudent()}"/>
+                                    <h:commandButton value="Teacher" action="#{personBean.allTeacher()}"/>
+                                    <!--<h:commandButton value="Result" action="{resultBean.allResult()}"/>-->
+                                </h:form>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </h:body>
+</html>
+

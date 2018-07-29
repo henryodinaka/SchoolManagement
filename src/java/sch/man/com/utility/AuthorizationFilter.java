@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sch.man.com.controller.PersonBean;
 
 /**
  *
@@ -27,6 +28,8 @@ public class AuthorizationFilter implements Filter {
 
   }
 
+          PersonBean report = new PersonBean();
+          
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) 
       throws IOException, ServletException {
@@ -43,7 +46,9 @@ public class AuthorizationFilter implements Filter {
           || reqURI.contains("/public/")
           || reqURI.contains("javax.faces.resource")) {
         chain.doFilter(request, servletResponse);
+          report.setReport("");
       } else {
+          report.setReport("Please Login first");
         response.sendRedirect(request.getContextPath() + "/faces/index.xhtml");
       }
     } catch (IOException | ServletException e) {
