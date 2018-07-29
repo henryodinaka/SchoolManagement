@@ -1,16 +1,28 @@
 package sch.man.com.controller;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+import org.springframework.beans.factory.annotation.Autowired;
+import sch.man.com.model.Result;
+import sch.man.com.service.ResultService;
+
 /**
  *
  * @author LEOGOLD
  */
-public class ResultBean {
+@Named(value = "resultBean")
+@RequestScoped
+public class ResultBean  {
+
     private String resultId;
     private double test1;
     private double test2;
     private double exam;
     private String studentId;
     private String subjectId;
+    
+    @Autowired
+    private ResultService resultService;
 
     public ResultBean() {
     }
@@ -22,6 +34,31 @@ public class ResultBean {
         this.exam = exam;
         this.studentId = studentId;
         this.subjectId = subjectId;
+    }
+
+    public String addResult() {
+        if (!resultId.isEmpty() || test1 != 0 || test2 != 0 || exam != 0 || !studentId.isEmpty() || subjectId.isEmpty()) {
+            ResultBean result = new ResultBean(resultId, test1, test2, exam, studentId, subjectId);
+            resultService.save(result);
+            return "successPage";
+        } else {
+            return "resultPage";
+        }
+    }
+    
+    public String getSingleResult(){
+        Result result = resultService.getSingleResult(resultId);
+        setBean(result);
+        return "page_to_return";
+    }
+    
+    public void setBean(Result result){
+        this.setResultId(result.getResultId());
+        this.setStudentId(result.getStudentId().getPersonId());
+        this.setSubjectId(result.getSubjectId().getSubjectId());
+        this.setTest1(result.getTest1());
+        this.setTest2(result.getTest2());
+        this.setExam(result.getExam());
     }
 
     public String getResultId() {
@@ -71,5 +108,5 @@ public class ResultBean {
     public void setSubjectId(String subjectId) {
         this.subjectId = subjectId;
     }
-    
+
 }

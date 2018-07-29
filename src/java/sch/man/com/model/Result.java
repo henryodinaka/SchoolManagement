@@ -35,9 +35,9 @@ public class Result implements Serializable {
     @Column (name = "exam", nullable = false)
     private double exam ;
     
-    @ManyToOne (fetch = FetchType.LAZY,targetEntity = Student.class)
+    @ManyToOne (fetch = FetchType.LAZY,targetEntity = Person.class)
     @JoinColumn(name = "student_Id", nullable=false,foreignKey = @ForeignKey(name="FK_Result_Student"))
-    private Student studentId;
+    private Person studentId;
       
     @ManyToOne (targetEntity = Subjects.class) 
     @JoinColumn(name = "subject_Id",
@@ -47,7 +47,7 @@ public class Result implements Serializable {
     public Result() {
     }
 
-    public Result(String resultId, double test1, double test2, double exam, Student studentId, Subjects subjectId) {
+    public Result(String resultId, double test1, double test2, double exam, Person studentId, Subjects subjectId) {
         this.resultId = resultId;
         this.test1 = test1;
         this.test2 = test2;
@@ -72,6 +72,14 @@ public class Result implements Serializable {
         this.test1 = test1;
     }
 
+    public double getTest2() {
+        return test2;
+    }
+
+    public void setTest2(double test2) {
+        this.test2 = test2;
+    }
+
     public double getExam() {
         return exam;
     }
@@ -80,11 +88,11 @@ public class Result implements Serializable {
         this.exam = exam;
     }
 
-    public Student getStudentId() {
+    public Person getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Student studentId) {
+    public void setStudentId(Person studentId) {
         this.studentId = studentId;
     }
 
