@@ -41,6 +41,7 @@ public class PersonService {
     private Query query;
 
     Person person;
+    String username;
 
     @Autowired
     PersonBean personBean;
@@ -97,7 +98,6 @@ public class PersonService {
         personBean.setLogName(null);
         return "index";
     }
-
 
     public String loggedUser() {
         httpSession = SessionUtils.getSession();
@@ -156,18 +156,45 @@ public class PersonService {
         }
     }
 
-    public int updatePerson(Person user, String username) {
+    public int updatePerson() {
+        username = SessionUtils.getPersonId();
         hql = "UPDATE Person u SET u.firstName=:fName, u.lastName=:lName, u.phone=:phone,u.emailId=:email WHERE u.username =:uName";
         session = sessionFactory.getCurrentSession();
         query = session.createQuery(this.hql);
         query.setParameter("uName", username);
-        query.setParameter("fName", user.getFirstName());
-        query.setParameter("lName", user.getLastName());
-        query.setParameter("phone", user.getPhone());
-        query.setParameter("email", user.getEmailId());
+        query.setParameter("fName", personBean.getFirstName());
+        query.setParameter("lName", personBean.getLastName());
+        query.setParameter("phone", personBean.getPhone());
+        query.setParameter("email", personBean.getEmailId());
 
         return query.executeUpdate();
 
+    }
+
+    public String updateLoggedPerson() {
+        username = SessionUtils.getPersonId();
+//        person = new Person(personBean.getFirstName(), personBean.getLastName(), personBean.getEmailId(), personBean.getPhone());
+        hql = "UPDATE Person p SET p.firstName=:fName,p.lastName=:lName, p.phone=:phone,p.emailId=:email,p.gender=:gender,p.dateOfBirth=:dob,p.address=:address WHERE p.personId =:personId";
+         
+        session = sessionFactory.getCurrentSession();
+        query = session.createQuery(this.hql);
+        query.setParameter("personId", username);
+        query.setParameter("fName", personBean.getFirstName());
+        query.setParameter("lName", personBean.getLastName());
+        query.setParameter("phone", personBean.getPhone());
+        query.setParameter("email", personBean.getEmailId());
+        query.setParameter("gender", personBean.getGender()); 
+        query.setParameter("dob", personBean.getDateOfBirth());
+        query.setParameter("address", personBean.getAddress());
+        int quryResult = query.executeUpdate();
+
+        if (quryResult != 0) {
+            personBean.setMessage("Your details have been updated successfully");
+            return "success";
+        } else {
+            personBean.setMessage("Update was not succesful");
+            return "failed";
+        }
     }
 
     public void deletePerson(Object username) {

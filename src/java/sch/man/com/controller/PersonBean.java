@@ -41,6 +41,7 @@ public class PersonBean {
     private String logName;
     private String logBtn;
     private String servicereport;
+    private String message;
 
     @Autowired
     private PersonService personService;
@@ -87,10 +88,10 @@ public class PersonBean {
 
     public String login() {//throws HandlingExeption
         if (!personId.isEmpty() || !password.isEmpty()) {
-            servicereport = personService.login(personId, password); 
-            
-                return "index?faces-redirectq";
-            
+            servicereport = personService.login(personId, password);
+
+            return "index?faces-redirectq";
+
         } else {
             setReport("Please enter valid username and password");
             return "index";
@@ -101,23 +102,28 @@ public class PersonBean {
         personService.logout();
         return "index?faces-redirect=true";
     }
-public String loggedUser(){
-    personService.loggedUser();
-    return "personProfile?faces-redirect=true";
-}
-    public void setPersonBean(Person person) {
-        setAddress(person.getAddress());
-        setDateOfBirth(person.getDateOfBirth());
-        setEmailId(person.getEmailId());
-        setFirstName(person.getFirstName());
-        setGender(person.getGender());
-        setLastName(person.getLastName());
-        setPersonId(person.getPersonId());
-        setPhone(person.getPhone());
-        setRole(person.getRole());
-        setStatus(person.getStatus());
-        setCreated(person.getCreated());
-        setUpdated(person.getUpdated());
+
+    public String loggedUser() {
+        personService.loggedUser();
+        return "personProfile?faces-redirect=true";
+    }
+
+    public String updateLoggedPerson() {
+        personService.updateLoggedPerson();
+        return "personProfile?faces-redirect=true";
+    }
+
+    public void reset() {
+        setAddress(null);
+        setDateOfBirth(null);
+        setEmailId(null);
+        setFirstName(null);
+        setGender(null);
+        setLastName(null);
+        setPersonId(null);
+        setPhone(null);
+        setRole(0);
+        setStatus(null); 
     }
 
     public String getPersonId() {
@@ -254,6 +260,14 @@ public String loggedUser(){
 
     public void setLogBtn(String logBtn) {
         this.logBtn = logBtn;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }
