@@ -2,8 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
+    <h:head> 
+        <link href="./resources/BaseTmCSS.css" rel="stylesheet" type="text/css"/>
     </h:head>
     <h:body> 
         <h:form>
@@ -18,13 +18,22 @@
                         <img alt="" src="Images/color1.png" width ="180px" height="160px" align="right"/>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <h:commandLink value="#{personBean.logName}" action="#"/>
+                <tr id="header">
+                    <div id="heade">
+                        <td align="center">
+                            <div class="dropdown">
+                                <h:commandLink class="dropbtn" value="#{personBean.logName}"/> 
+                                <div class="dropdown-content">
+                                    <h:commandLink action="#{personBean.loggedUser()}" value="Profile"/>
+                                    <h:commandLink action="#{personBean.logout()}" value="#{personBean.logBtn}"/>
+                            </div>
+                        </div>
                     </td>
-                </tr>
-            </table>
-        </h:form>
-    </h:body>
+                </div>
+            </tr>
+
+        </table>
+    </h:form>
+</h:body>
 </html>
 

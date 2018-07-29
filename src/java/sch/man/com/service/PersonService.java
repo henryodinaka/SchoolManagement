@@ -30,6 +30,7 @@ public class PersonService {
 
     public static final int ROLE_ADMIN = 1;
     public static final int ROLE_USER = 2;
+    int role;
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -38,9 +39,10 @@ public class PersonService {
     HttpSession httpSession;
     private String hql;
     private Query query;
-    
-    
+
     Person person;
+
+    @Autowired
     PersonBean personBean;
     List<Person> personList = null;
 
@@ -54,7 +56,7 @@ public class PersonService {
         return "success";
     }
 
-    public Person login(String personId, String password) { 
+    public String login(String personId, String password) {
         try {
             session = sessionFactory.getCurrentSession();
 
@@ -64,20 +66,52 @@ public class PersonService {
                     .setParameter("person", personId)
                     .setParameter("password", password)
                     .uniqueResult();
-            return person;
+            setPersonBean(person);
         } catch (EmptyResultDataAccessException ex) {
             ex.printStackTrace();
-            return null;
         }
+
+        if (person != null) {
+            HttpSession session = SessionUtils.getSession();
+            session.setAttribute("personId", person.getPersonId());
+            session.setAttribute("loggedUser", person);
+
+            personBean.setLogName(person.getPersonId());
+            personBean.setLogBtn("Log Out");
+            setPersonBean(person);
+            return "success";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid login", "Please enter correct Username and Password"));
+            personBean.setReport("wrong username or password");
+            return "failed";
         }
+    }
 
     public String logout() {
         httpSession = SessionUtils.getSession();
         httpSession.invalidate();
         personBean.setReport("Log out successful");
-        personBean.setLoginBtn(null);
+        personBean.setLogBtn(null);
         personBean.setLogName(null);
         return "index";
+    }
+
+
+    public String loggedUser() {
+        httpSession = SessionUtils.getSession();
+        person = (Person) httpSession.getAttribute("loggedUser");
+        role = person.getRole();
+        setPersonBean(person);
+        switch (role) {
+            case ROLE_ADMIN:
+                return "admin";
+            case ROLE_USER:
+                return "user";
+            default:
+                return "user";
+        }
     }
 
     public void setPersonBean(Person person) {
