@@ -37,7 +37,7 @@ public class Department implements Serializable {
     @Column (name = "num_of_student", nullable = false)
     private int numOfStudent ;
     
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Department.class)
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Person.class)
     @JoinColumn(name = "Hod",
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_Department_Teacher"))
