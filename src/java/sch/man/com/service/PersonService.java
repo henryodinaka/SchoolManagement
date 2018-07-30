@@ -292,7 +292,7 @@ public class PersonService {
             session = sessionFactory.getCurrentSession();
 
             person = (Person) session.createQuery("FROM Person u "
-                    + "WHERE u.username = :username")
+                    + "WHERE u.personId = :username")
                     .setParameter("username", personId)
                     .uniqueResult();
 
