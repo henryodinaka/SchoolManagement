@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Detail</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="resources/movieSite.css"/>
+    </h:head>
+    <h:body>
+        <div id="header">
+            <ui:include src="header.xhtml"/>
+        </div> 
+        <div id="wrapper-other"> 
+            <div id="sidebar-detail">
+
+                <h:form id="form-movie-series">
+                    <p:dataGrid var="person" value="#{personService.allPerson}" columns="1" layout="grid"
+                                rows="8" paginator="false" id="person-grid"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,16">
+
+                        <f:facet name="header">
+                            <p class="caption-index sticky"> 
+                                <h:outputText value="#{personBean.position}"/>
+                            </p>
+                        </f:facet>
+
+                        <p:panel header="#{person.personId}" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:graphicImage name="Images/img_avatar2.png"/> 
+
+                                <h:outputText value="First Name : #{person.firstName}" />
+                                <h:outputText value="Role : #{person.role}" />
+
+                                <h:commandButton value="More" action="#{personBean.moreInfo(person.personId)}" title="View Detail">
+                                </h:commandButton>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:dataGrid>
+                </h:form>
+
+            </div>
+            <div id="table" class="animate">  
+                <table bgcolor="black" cellpadding="12px" border="1" width="60%" align="center">
+
+                    <tr>
+                        
+                                                <td bgcolor="white">
+                            <table cellpadding="12px" bgcolor="white" border="0" align="center" style="height: 100%">
+                                <tr>
+                                    <p>
+                                        <h:outputText value="#{personBean.message}"/>
+                                    </p>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Subject:
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{resultBean.subjectId}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Test 1:
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{resultBean.test1}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                       Test 2
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{resultBean.test2}"/>
+                                    </td>
+                                </tr>  
+                                <tr>
+                                    <td>
+                                        Grade
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{resultBean.grade}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Subject Teacher
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{resultBean.teacherId}"/>
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td>
+                                        Position
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{resultBean.position}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Remark
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{resultBean.remark}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Exam Date:
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{resultBean.dateOfExam}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Venue:
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <h:outputText value="#{resultBean.dateOfExam}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <h:button>Download</h:button>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div> 
+    </h:body>
+</html>
+

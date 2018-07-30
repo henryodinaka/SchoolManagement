@@ -1,5 +1,6 @@
 package sch.man.com.controller;
 
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import sch.man.com.service.ResultService;
  */
 @Named(value = "resultBean")
 @RequestScoped
-public class ResultBean  {
+public class ResultBean {
 
     private String resultId;
     private double test1;
@@ -20,9 +21,10 @@ public class ResultBean  {
     private double exam;
     private String studentId;
     private String subjectId;
-    
+
     @Autowired
     private ResultService resultService;
+    List<Result> studentResultList;
 
     public ResultBean() {
     }
@@ -45,14 +47,20 @@ public class ResultBean  {
             return "resultPage";
         }
     }
-    
-    public String getSingleResult(){
+
+    public String sngleResult() {
         Result result = resultService.getSingleResult(resultId);
         setBean(result);
-        return "page_to_return";
+        return "viewResult?faces-redirect=true";
     }
-    
-    public void setBean(Result result){
+
+    public String studentResult() {
+        studentResultList = resultService.getStudentResults();
+        
+        return "resultList?faces-redirect=true";
+    }
+
+    public void setBean(Result result) {
         this.setResultId(result.getResultId());
         this.setStudentId(result.getStudentId().getPersonId());
         this.setSubjectId(result.getSubjectId().getSubjectId());
@@ -107,6 +115,14 @@ public class ResultBean  {
 
     public void setSubjectId(String subjectId) {
         this.subjectId = subjectId;
+    }
+
+    public List<Result> getStudentResultList() {
+        return studentResultList;
+    }
+
+    public void setStudentResultList(List<Result> studentResultList) {
+        this.studentResultList = studentResultList;
     }
 
 }
