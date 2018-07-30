@@ -38,7 +38,7 @@ public class SubjectService {
         session = sessionFactory.getCurrentSession();
         session.save(sub);
         
-        subjectBean.setReport("New Subject added");
+        subjectBean.setReport("New Subject added Successfully");
         return "success";
 
     }

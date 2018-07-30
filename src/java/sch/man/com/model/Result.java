@@ -1,6 +1,7 @@
 package sch.man.com.model;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,11 +36,11 @@ public class Result implements Serializable {
     @Column (name = "exam", nullable = false)
     private double exam ;
     
-    @ManyToOne (fetch = FetchType.LAZY,targetEntity = Person.class)
+    @ManyToOne (fetch = FetchType.LAZY,targetEntity = Person.class,cascade = CascadeType.ALL)
     @JoinColumn(name = "student_Id", nullable=false,foreignKey = @ForeignKey(name="FK_Result_Student"))
     private Person studentId;
       
-    @ManyToOne (targetEntity = Subjects.class) 
+    @ManyToOne (targetEntity = Subjects.class,cascade = CascadeType.ALL) 
     @JoinColumn(name = "subject_Id",
             foreignKey = @ForeignKey(name="FK_Result_Subject"), nullable=false) 
     private Subjects subjectId;

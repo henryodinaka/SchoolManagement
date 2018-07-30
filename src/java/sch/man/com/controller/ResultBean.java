@@ -25,6 +25,7 @@ public class ResultBean {
     @Autowired
     private ResultService resultService;
     List<Result> studentResultList;
+    private String report;
 
     public ResultBean() {
     }
@@ -123,6 +124,14 @@ public class ResultBean {
 
     public void setStudentResultList(List<Result> studentResultList) {
         this.studentResultList = studentResultList;
+    }
+
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
     }
 
 }

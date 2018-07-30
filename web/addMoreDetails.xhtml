@@ -17,53 +17,38 @@
         <ui:composition template="BaseTemplate.xhtml">
               <ui:define name="body">
                   
-                  <p align="center">
-                      <h:outputText style="color: red; font-family: fantasy; font-size: 2em;" value="#{resultBean.report}"/>  
-                  </p>
-                  
                     <p style="color: darkblue; font-size: 20pt" align="center">
-                        <b>Add New Result</b>
+                        <b>Add Parent Infromation</b>
                     </p> 
                     <table bgcolor="black" cellpadding="12px" border="1" width="60%" align="center" style="height: 120px">
                         <tr>
                             <td bgcolor="white">
                             <table border="0" width="100%" bgcolor="white" align="center" style="height: 100px">
-                                
                                 <h:form>
                                     <tr>
                                         
-                                        <td>Result Id:</td> 
-                                        <td><h:inputText value="#{resultBean.resultId}"/>
+                                        <td>Guardian name:</td> 
+                                        <td><h:inputText value="#{personBean.firstName}"/>
                                         </td> 
                                     </tr>
                                     <tr>
-                                        <td>Subject Id</td>
-                                        <td><h:inputText value="#{resultBean.subjectId}"/>
+                                        <td>Guardian Phone number:</td>
+                                        <td><h:inputText value="#{personBean.lastName}"/>
                                         </td> 
+                                    </tr> 
+                                    <tr>
+                                        <td>Guardian Address:</td>
+                                        <td>
+                                            <h:inputText  id="dob" value="#{personBean.dateOfBirth}" />  
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>Student Id</td>
-                                        <td><h:inputText value="#{resultBean.studentId}"/>
+                                        <td>Current Class </td>
+                                        <td><h:inputText value="#{personBean.address}"/>
                                         </td> 
-                                    </tr>
-                                    <tr>
-                                        <td>Test1 </td>
-                                        <td><h:inputText value="#{resultBean.test1}"/>
-                                        </td> 
-                                    </tr>
-                                    <tr>
-                                        <td>Test2:</td>
-                                        <td><h:inputText value="#{resultBean.test2}"/>
-                                        </td> 
-                                    </tr>
-                                    <tr>
-                                        <td>Exam:</td>
-                                        <td><h:inputText value="#{resultBean.exam}"/>
-                                        </td> 
-                                    </tr>
-                                    <tr>
+                                    </tr> 
                                         <td align ="right">
-                                            <h:commandButton value="Submit" action="#{resultBean.addResult()}"/>
+                                            <h:commandButton value="Submit" action="addMoreDetails"/>
                                         </td>
                                         <td align="left">
                                             <h:commandButton value="Reset" type="reset" immediate="true" action="personRegForm"/>
@@ -71,10 +56,11 @@
                                     </tr>
                                 </h:form>
                             </table>
-                        </td>
-                    </tr>
-                </table>
-            </ui:define>
-        </ui:composition>
+                            </td>
+                        </tr>
+                    </table>
+              </ui:define>
+          </ui:composition>
     </h:body>
 </html>
+

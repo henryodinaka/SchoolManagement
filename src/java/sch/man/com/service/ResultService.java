@@ -33,6 +33,9 @@ public class ResultService {
     private Query query;
     Person person;
 
+    @Autowired
+    ResultBean resultBean;
+
     Result result = null;
     List<Result> resultList = null;
 
@@ -50,12 +53,13 @@ public class ResultService {
         result.setSubjectId(subject);
 
         session.save(result);
+        resultBean.setReport("Result Was Added Successfully");
         return "success";
     }
 
     public List<Result> getStudentResults() {
         List<Result> studentResult = null;
-        person =(Person)httpSession.getAttribute("loggedPerson");
+        person = (Person) httpSession.getAttribute("loggedPerson");
         String personId = person.getPersonId();
         try {
             session = sessionFactory.getCurrentSession();
@@ -75,7 +79,7 @@ public class ResultService {
         try {
             session = sessionFactory.getCurrentSession();
 
-            query = session.createQuery("FROM Result"); 
+            query = session.createQuery("FROM Result");
             resultList = query.list();
         } catch (EmptyResultDataAccessException ex) {
             ex.printStackTrace();
