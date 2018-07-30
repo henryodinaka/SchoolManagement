@@ -5,6 +5,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import sch.man.com.model.Department;
+import sch.man.com.model.Person;
 import sch.man.com.model.Teacher;
 import sch.man.com.service.DepartmentService;
 
@@ -43,8 +44,8 @@ public class DepartmentBean {
     public String save(){
         int numTeacher = Integer.valueOf(numOfteacher);
         int numStudent = Integer.valueOf(numOfStudent);
-        Teacher teacherId = new Teacher();
-        teacherId.setTeacherId(hod);
+        Person teacherId = new Person();
+        teacherId.setPersonId(hod);
         department = new Department(departmentId, departmentName, numTeacher, numStudent, teacherId);
         depService.save(department);
         return "addDepartment";

@@ -41,7 +41,7 @@ public class Department implements Serializable {
     @JoinColumn(name = "Hod",
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_Department_Teacher"))
-    private Teacher hod;
+    private Person hod;
     
     @OneToMany(mappedBy ="departmentId",
             fetch = FetchType.LAZY,
@@ -57,7 +57,7 @@ public class Department implements Serializable {
     public Department() {
     }
 
-    public Department(String departmentId, String departmentName, int numOfTeacher, int numOfStudent, Teacher hod, List<Student> studentId, List<Teacher> teacherId) {
+    public Department(String departmentId, String departmentName, int numOfTeacher, int numOfStudent, Person hod, List<Student> studentId, List<Teacher> teacherId) {
         this.departmentId = departmentId;
         this.departmentName = departmentName;
         this.numOfTeacher = numOfTeacher;
@@ -67,7 +67,7 @@ public class Department implements Serializable {
         this.teacherId = teacherId;
     }
 
-    public Department(String departmentId, String departmentName, int numOfTeacher, int numOfStudent, Teacher hod) {
+    public Department(String departmentId, String departmentName, int numOfTeacher, int numOfStudent, Person hod) {
         this.departmentId = departmentId;
         this.departmentName = departmentName;
         this.numOfTeacher = numOfTeacher;
@@ -109,11 +109,11 @@ public class Department implements Serializable {
         this.numOfStudent = numOfStudent;
     }
 
-    public Teacher getHod() {
+    public Person getHod() {
         return hod;
     }
 
-    public void setHod(Teacher hod) {
+    public void setHod(Person hod) {
         this.hod = hod;
     }
 

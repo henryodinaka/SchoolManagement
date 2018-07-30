@@ -18,9 +18,9 @@ table,tr{
     background:"#40407a";
 }
 .dropbtn {
-    color: #dcdde1;
-    padding: 16px;
-    font-size: 16px;
+    color: #ffffff;
+    padding: 1em;
+    font-size: 2em;
     border: none;
     cursor: pointer;
 }

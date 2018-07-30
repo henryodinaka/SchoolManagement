@@ -397,4 +397,20 @@ public class PersonService {
         }
 
     }
+        
+    public int getNumberOfStudents(){
+        if(getAllStudent() != null){
+            return getAllStudent().size();
+        } else {
+            return 0;
+        }
+    }
+    
+    public int getNumberOfTeachers(){
+        if(getAllTeacher() != null){
+            return getAllTeacher().size();
+        } else {
+            return 0;
+        }
+    }
 }
