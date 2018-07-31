@@ -77,9 +77,17 @@ public class PersonService {
 
             role = person.getRole();
             int serial = person.getSerial();
+            httpSession = SessionUtils.getSession();
+
             if (serial == 1) {
-                httpSession = SessionUtils.getSession();
-                httpSession.setAttribute("adminRole", role);
+
+                //This is statement will only run once at the first Login of the admin
+                if (role != 1) {
+                    httpSession.setAttribute("personView", person);
+                    assignRole(ROLE_ADMIN);
+                    role = ROLE_ADMIN;
+                    httpSession.removeAttribute("personView");
+                }
                 httpSession.setAttribute("personId", person.getPersonId());
                 httpSession.setAttribute("loggedUser", person);
 
@@ -285,8 +293,8 @@ public class PersonService {
 
         }
     }
-    
-    public Person getPerson1(String personId){
+
+    public Person getPerson1(String personId) {
         session = sessionFactory.getCurrentSession();
         try {
             session = sessionFactory.getCurrentSession();
@@ -302,14 +310,19 @@ public class PersonService {
         return person;
     }
 
-    public int assignRole() {
+    public int assignRole(int roleToAssign) {
+//        if(roleToAssign == ROLE_ADMIN){
+//            roleToAssign = ROLE_ADMIN;
+//        }else{
+//            roleToAssign =ROLE_TEACHER;
+//        }
         Person personView = (Person) httpSession.getAttribute("personView");
 
         hql = "UPDATE Person p SET p.role=:role WHERE p.personId =:id";
         session = sessionFactory.getCurrentSession();
         query = session.createQuery(this.hql);
         query.setParameter("id", personView.getPersonId());
-        query.setParameter("role", ROLE_TEACHER);
+        query.setParameter("role", roleToAssign);
 
         return query.executeUpdate();
 
@@ -397,17 +410,17 @@ public class PersonService {
         }
 
     }
-        
-    public int getNumberOfStudents(){
-        if(getAllStudent() != null){
+
+    public int getNumberOfStudents() {
+        if (getAllStudent() != null) {
             return getAllStudent().size();
         } else {
             return 0;
         }
     }
-    
-    public int getNumberOfTeachers(){
-        if(getAllTeacher() != null){
+
+    public int getNumberOfTeachers() {
+        if (getAllTeacher() != null) {
             return getAllTeacher().size();
         } else {
             return 0;

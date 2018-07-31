@@ -26,14 +26,15 @@ public class Person implements Serializable {
  
     private static final long serialVersionUID = 1L;
     
+     
     @Id
-    @Column(name = "personId", nullable = false, unique = true)
-    private String personId;
-    
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "serialNo")
     private int serial;
     
+    @Column(name = "personId", nullable = false, unique = true)
+    private String personId;
+   
     @Column (name = "password",nullable = false)
     private String password;
      

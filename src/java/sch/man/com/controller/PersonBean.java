@@ -24,8 +24,8 @@ public class PersonBean {
     private String phone;
     private String password;
     private String password2;
-    private int role = 3;
-    private String status = "a";
+    private int role;
+    private String status;
     private String gender;
     private Date dateOfBirth;
     private String address;
@@ -66,7 +66,7 @@ public class PersonBean {
         if (!personId.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty() && !emailId.isEmpty() && !phone.isEmpty() && !password.isEmpty() && !gender.isEmpty() && !password.isEmpty()) {
 
             //   Date dob = new SimpleDateFormat("MM/dd/yy").parse(dateOfBirth);
-            person = new Person(personId, firstName, lastName, emailId, phone, password, role, status, gender, dateOfBirth, address);
+            person = new Person(personId, firstName, lastName, emailId, phone, password, PersonService.ROLE_STUDENT, PersonService.LOGIN_ACTIVE, gender, dateOfBirth, address);
             personService.save(person);
             feedBack = true;
         } else {
@@ -128,6 +128,8 @@ public class PersonBean {
                     return "teacher_dashboard?faces-redirect=true";
                 case "student":
                     return "student_dashboard?faces-redirect=true";
+                case "failed":
+                    return "index?faces-redirect=true";
                 default:
                     return "index";
             }
@@ -164,7 +166,7 @@ public class PersonBean {
     }
 
     public String assignRole() {
-        personService.assignRole();
+        personService.assignRole(role);
         return "personProfileAdmin?faces-redirect=true";
     }
 
